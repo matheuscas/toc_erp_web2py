@@ -2,7 +2,7 @@
 def inserir_fornecedor():
 	form = SQLFORM.factory(db.fornecedor, db.endereco, db.contato)
 	if form.process().accepted:
-		
+
 	   id = db.endereco.insert(**db.endereco._filter_fields(form.vars))	
 	   form.vars.endereco = id
 
@@ -19,4 +19,10 @@ def atualizar_fornecedor():
 
 def listar_fornecedores():	
 	pass
+
+def inserir_ramo_atividade():
+	form = SQLFORM(db.ramoAtividade)
+	if form.process().accepted:
+		response.flash = 'Registro inserido com sucesso'
+	return dict(form=form)   
 	
