@@ -11,7 +11,7 @@
 
 db_username_postgres = 'postgres'
 db_password_postgres = '1234'
-db_postgres_url = 'postgres://' + db_username_postgres + ':' + db_password_postgres + '@localhost/test'
+db_postgres_url = 'postgres://' + db_username_postgres + ':' + db_password_postgres + '@localhost/dev'
 db_sqlite_url = 'sqlite://storage.sqlite'
 
 if not request.env.web2py_runtime_gae:
@@ -50,6 +50,8 @@ crud, service, plugins = Crud(db), Service(), PluginManager()
 
 ## create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
+#db._common_fields.append(auth.signature)
+
 
 ## configure email
 mail = auth.settings.mailer
