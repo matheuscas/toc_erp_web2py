@@ -16,8 +16,6 @@ driver = webdriver.Firefox()
 action = '/inserir_fornecedor'
 url_inserir_fornecedor = compras_url_base + action
 submit_button = "//input[@value='Submit']"
-flash_none = "//div[@class='flash' @style='display: none']"
-flash_block = "//div[@class='flash']"
 
 db_username_postgres = 'postgres'
 db_password_postgres = '1234'
@@ -63,7 +61,6 @@ def limpa_campos_obrigatorios():
 	bairro.send_keys("")
 	cidade.send_keys("")
 	estado.send_keys("")
-
 
 def test_campos_obrigatorios_vazios():
 	
