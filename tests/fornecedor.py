@@ -111,6 +111,9 @@ def test_campos_obrigatorios_preenchidos():
 
 	rows = db_test(db_test.fornecedor.cpf_cnpj == cpf_cnpj_num).select()
 
+	for row in rows:
+		fornecedor_id = row.id
+
 	assert (rows > 0) == True
 	
 	#driver.quit()
@@ -127,24 +130,31 @@ def test_insercao_fornecedor_unico():
 
 	WebDriverWait(driver, 10)
 
-	for element in cpf_cnpj_error:
-		assert element.text == mensagem_erro_padrao
+	for error in cpf_cnpj_error:
+		assert error.text == mensagem_erro_padrao	
 
-	rows = db_test(db_test.fornecedor.cpf_cnpj == cpf_cnpj_num).select()
+	#exclui o fornecedor de teste para nao inchar o banco de teste
+	#refatorar para classe, posteriormente
+	rows = db_test(db_test.fornecedor.id == fornecedor_id).select()
 
-	id_del = 0
-	
-	for row in rows:		
-		id_del = row.id
+	endereco_id_to_del = 0
+	contato_id_to_del = 0
 
-	db_test(db_test.fornecedor.id==id_del).delete()
+	for row in rows:
+		endereco_id_to_del = row.endereco
+		contato_id_to_del = row.contato_id
+
+	db_test(db_test.fornecedor.id == fornecedor_id).delete()
+	db_test(db_test.endereco.id == endereco_id_to_del).delete()
+	db_test(db_test.contato.id == contato_id_to_del).delete()
 
 	db_test.commit()
 
 	driver.quit()	
 
-"""def test_exclusao_fornecedor_com_movimentacoes():
-	pass
 
-def test_exclusao_fornecedor_sem_movimentacoes():
-	pass			"""
+"""	def test_exclusao_fornecedor_com_movimentacoes():
+		pass
+
+	def test_exclusao_fornecedor_sem_movimentacoes():
+		pass			"""
