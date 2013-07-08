@@ -27,6 +27,44 @@ path_to_database = path.join(path.curdir, "../databases")
 db_test = DAL(db_postgres_url, folder=path_to_database)
 db_test.import_table_definitions(path_to_database)
 
+cpf_cnpj_num = "02441251557"
+fornecedor_id = 0
+
+def preenche_campos_obrigatorios_e_submit():
+
+	nome = driver.find_element_by_id("no_table_nome")
+	cpf_cnpj = driver.find_element_by_id("no_table_cpf_cnpj")
+	rua = driver.find_element_by_id("no_table_rua")
+	bairro = driver.find_element_by_id("no_table_bairro")
+	cidade = driver.find_element_by_id("no_table_cidade")
+	estado = driver.find_element_by_id("no_table_estado")
+	
+	nome.send_keys("fornecedor qualquer")
+	cpf_cnpj.send_keys(cpf_cnpj_num)
+	rua.send_keys("E")
+	bairro.send_keys("MDA")
+	cidade.send_keys("FSA")
+	estado.send_keys("Bahia")
+
+	driver.find_element_by_xpath(submit_button).click()
+
+def limpa_campos_obrigatorios():
+
+	nome = driver.find_element_by_id("no_table_nome")
+	cpf_cnpj = driver.find_element_by_id("no_table_cpf_cnpj")
+	rua = driver.find_element_by_id("no_table_rua")
+	bairro = driver.find_element_by_id("no_table_bairro")
+	cidade = driver.find_element_by_id("no_table_cidade")
+	estado = driver.find_element_by_id("no_table_estado")
+
+	nome.send_keys("")
+	cpf_cnpj.send_keys("")
+	rua.send_keys("")
+	bairro.send_keys("")
+	cidade.send_keys("")
+	estado.send_keys("")
+
+
 def test_campos_obrigatorios_vazios():
 	
 	driver.get(url_inserir_fornecedor)
@@ -69,36 +107,43 @@ def test_campos_obrigatorios_preenchidos():
 
 	#driver.get(url_inserir_fornecedor)
 
-	nome = driver.find_element_by_id("no_table_nome")
-	cpf_cnpj = driver.find_element_by_id("no_table_cpf_cnpj")
-	rua = driver.find_element_by_id("no_table_rua")
-	bairro = driver.find_element_by_id("no_table_bairro")
-	cidade = driver.find_element_by_id("no_table_cidade")
-	estado = driver.find_element_by_id("no_table_estado")
+	preenche_campos_obrigatorios_e_submit()
 
-	mensagem_sucesso = 'FOI'
+	rows = db_test(db_test.fornecedor.cpf_cnpj == cpf_cnpj_num).select()
 
+	assert (rows > 0) == True
+	
+	#driver.quit()
 
-	nome.send_keys("fornecedor qualquer")
+def test_insercao_fornecedor_unico():
 
-	cpf_cnpj_num = "02441251524"
+	cpf_cnpj_error = driver.find_elements_by_id("cpf_cnpj__error")
 
-	cpf_cnpj.send_keys(cpf_cnpj_num)
-	rua.send_keys("E")
-	bairro.send_keys("MDA")
-	cidade.send_keys("FSA")
-	estado.send_keys("Bahia")
+	mensagem_erro_padrao = 'value already in database or empty'
 
-	driver.find_element_by_xpath(submit_button).click()
+	limpa_campos_obrigatorios()
 
-	assert (db_test(db_test.fornecedor.cpf_cnpj == cpf_cnpj_num).select() > 0) == True
+	preenche_campos_obrigatorios_e_submit()
 
-	driver.quit()
+	WebDriverWait(driver, 10)
 
-"""def test_insercao_fornecedor_unico():
-	pass
+	for element in cpf_cnpj_error:
+		assert element.text == mensagem_erro_padrao
 
-def test_exclusao_fornecedor_com_movimentacoes():
+	rows = db_test(db_test.fornecedor.cpf_cnpj == cpf_cnpj_num).select()
+
+	id_del = 0
+	
+	for row in rows:		
+		id_del = row.id
+
+	db_test(db_test.fornecedor.id==id_del).delete()
+
+	db_test.commit()
+
+	driver.quit()	
+
+"""def test_exclusao_fornecedor_com_movimentacoes():
 	pass
 
 def test_exclusao_fornecedor_sem_movimentacoes():

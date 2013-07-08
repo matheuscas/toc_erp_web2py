@@ -27,5 +27,4 @@ db.define_table('ramoAtividade',
 	Field('nome_ramo','string',required=True, notnull=True),
 	Field('descricao','text'),
 	Field('forncedor_id','reference fornecedor', writable=False, readable=False),
-	auth.signature,
 	format='%(nome_ramo)')
