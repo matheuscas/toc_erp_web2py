@@ -13,10 +13,12 @@ from gluon.validators import *
 
 compras_url_base = 'http://127.0.0.1:8000/toc_erp_web2py/compras'
 driver = webdriver.Firefox()
-action = '/inserir_ramo_atividade'
+acao_inserir = '/inserir_ramo_atividade'
+acao_atualizar = '/atualizar_ramo_atividade'
 submit_button = "//input[@value='Submit']"
-url_inserir_ramoAtividade = compras_url_base + action
-nome_ramoAtividade = "ramo qualquer" 
+url_inserir_ramoAtividade = compras_url_base + acao_inserir
+url_atualizar_ramoAtividade = compras_url_base + acao_atualizar
+nome_ramoAtividade = "ramo qualquer_test" 
 
 db_username_postgres = 'postgres'
 db_password_postgres = '1234'
@@ -29,9 +31,9 @@ db_test.import_table_definitions(path_to_database)
 
 def preenche_campos_obrigatorios():
 	nome = driver.find_element_by_id("ramoAtividade_nome_ramo")	
-	nome.send_keys(nome_ramoAtividade)
+	nome.send_keys(nome_ramoAtividade)	
 
-def test_campos_obrigatorios_vazios():
+def test_inserir_campos_obrigatorios_vazios():
 
 	driver.get(url_inserir_ramoAtividade)
 
@@ -48,7 +50,7 @@ def test_campos_obrigatorios_vazios():
 
 	#driver.quit()	
 
-def test_campos_obrigatorios_preenchidos():	
+def test_inserir_campos_obrigatorios_preenchidos():	
 	
 	preenche_campos_obrigatorios()
 
@@ -61,6 +63,4 @@ def test_campos_obrigatorios_preenchidos():
 
 	assert (db_test(db_test.ramoAtividade.nome_ramo == nome_ramoAtividade).select() > 0) == True
 
-	driver.quit()
-
- 	
+	driver.quit() 	
