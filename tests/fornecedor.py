@@ -12,9 +12,12 @@ from gluon.sql import DAL, Field
 from gluon.validators import *
 
 compras_url_base = 'http://127.0.0.1:8000/toc_erp_web2py/compras'
+inserir_fornecedor = '/inserir_fornecedor'
+atualizar_fornecedor = '/atualizar_fornecedor'
+url_inserir_fornecedor = compras_url_base + inserir_fornecedor
+url_atualizar_fornecedor = compras_url_base + atualizar_fornecedor
+
 driver = webdriver.Firefox()
-action = '/inserir_fornecedor'
-url_inserir_fornecedor = compras_url_base + action
 submit_button = "//input[@value='Submit']"
 
 db_username_postgres = 'postgres'
@@ -25,7 +28,7 @@ path_to_database = path.join(path.curdir, "../databases")
 db_test = DAL(db_postgres_url, folder=path_to_database)
 db_test.import_table_definitions(path_to_database)
 
-cpf_cnpj_num = "02441251563"
+cpf_cnpj_num = "02441251570"
 fornecedor_id = 0
 
 def preenche_campos_obrigatorios_e_submit():
@@ -62,7 +65,7 @@ def limpa_campos_obrigatorios():
 	cidade.clear()
 	estado.clear()
 
-def test_campos_obrigatorios_vazios():
+def test_inserir_fornecedor_com_campos_obrigatorios_vazios():
 	
 	driver.get(url_inserir_fornecedor)
 
@@ -100,41 +103,38 @@ def test_campos_obrigatorios_vazios():
 	#driver.quit()
 	
 
-def test_campos_obrigatorios_preenchidos():
+def test_inserir_fornecedor_com_campos_obrigatorios_preenchidos():
 
-	#driver.get(url_inserir_fornecedor)
-
+	driver.get(url_inserir_fornecedor)
 	preenche_campos_obrigatorios_e_submit()
-
 	rows = db_test(db_test.fornecedor.cpf_cnpj == cpf_cnpj_num).select()
-
-	for row in rows:
-		fornecedor_id = row.id
-
 	assert (rows > 0) == True
-	
-	#driver.quit()
 
-def test_insercao_fornecedor_unico():
+def test_inserir_cpf_cnpj_repetido():
 
+	driver.get(url_inserir_fornecedor)
 	cpf_cnpj_error = driver.find_elements_by_id("cpf_cnpj__error")
-
 	mensagem_erro_padrao = 'value already in database or empty'
-
-	limpa_campos_obrigatorios()
-
+	#limpa_campos_obrigatorios()
 	preenche_campos_obrigatorios_e_submit()
-
 	WebDriverWait(driver, 10)
 
 	for error in cpf_cnpj_error:
-		assert error.text == mensagem_erro_padrao	
+		assert error.text == mensagem_erro_padrao
 
-	#exclui o fornecedor de teste para nao inchar o banco de teste
-	#refatorar para classe, posteriormente
+def test_mostrar_fornecedor_com_id_existente():
+	
 	#rows = db_test(db_test.fornecedor.id == fornecedor_id).select()
 	rows = db_test(db_test.fornecedor.cpf_cnpj == cpf_cnpj_num).select()
 
+	driver.get(url_atualizar_fornecedor + '/' + str(rows[0].id))
+
+	cpf_cnpj = driver.find_element_by_id("fornecedor_cpf_cnpj")
+
+	assert cpf_cnpj.get_attribute("value")  == cpf_cnpj_num
+
+	#exclui o fornecedor de teste para nao inchar o banco de teste
+	#refatorar para classe, posteriormente
 	endereco_id_to_del = rows[0].endereco
 	contato_id_to_del = rows[0].contato_id
 
@@ -145,8 +145,8 @@ def test_insercao_fornecedor_unico():
 
 	db_test.commit()
 
-	driver.quit()	
-
+	driver.quit()
+	
 
 """	def test_exclusao_fornecedor_com_movimentacoes():
 		pass
