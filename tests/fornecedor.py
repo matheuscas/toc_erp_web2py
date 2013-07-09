@@ -25,7 +25,7 @@ path_to_database = path.join(path.curdir, "../databases")
 db_test = DAL(db_postgres_url, folder=path_to_database)
 db_test.import_table_definitions(path_to_database)
 
-cpf_cnpj_num = "02441251557"
+cpf_cnpj_num = "02441251563"
 fornecedor_id = 0
 
 def preenche_campos_obrigatorios_e_submit():
@@ -55,12 +55,12 @@ def limpa_campos_obrigatorios():
 	cidade = driver.find_element_by_id("no_table_cidade")
 	estado = driver.find_element_by_id("no_table_estado")
 
-	nome.send_keys("")
-	cpf_cnpj.send_keys("")
-	rua.send_keys("")
-	bairro.send_keys("")
-	cidade.send_keys("")
-	estado.send_keys("")
+	nome.clear()
+	cpf_cnpj.clear()
+	rua.clear()
+	bairro.clear()
+	cidade.clear()
+	estado.clear()
 
 def test_campos_obrigatorios_vazios():
 	
@@ -132,16 +132,14 @@ def test_insercao_fornecedor_unico():
 
 	#exclui o fornecedor de teste para nao inchar o banco de teste
 	#refatorar para classe, posteriormente
-	rows = db_test(db_test.fornecedor.id == fornecedor_id).select()
+	#rows = db_test(db_test.fornecedor.id == fornecedor_id).select()
+	rows = db_test(db_test.fornecedor.cpf_cnpj == cpf_cnpj_num).select()
 
-	endereco_id_to_del = 0
-	contato_id_to_del = 0
+	endereco_id_to_del = rows[0].endereco
+	contato_id_to_del = rows[0].contato_id
 
-	for row in rows:
-		endereco_id_to_del = row.endereco
-		contato_id_to_del = row.contato_id
-
-	db_test(db_test.fornecedor.id == fornecedor_id).delete()
+	#db_test(db_test.fornecedor.id == fornecedor_id).delete()
+	db_test(db_test.fornecedor.cpf_cnpj == cpf_cnpj_num).delete()
 	db_test(db_test.endereco.id == endereco_id_to_del).delete()
 	db_test(db_test.contato.id == contato_id_to_del).delete()
 
