@@ -39,7 +39,8 @@ def atualizar_fornecedor():
 
 
 def listar_fornecedores():	
-	pass
+	grid = SQLFORM.grid(db.fornecedor)
+	return locals()
 
 #RAMOS DE ATIVIDADE
 def inserir_ramo_atividade():
