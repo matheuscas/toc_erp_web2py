@@ -26,5 +26,5 @@ db.define_table('fornecedor',
 db.define_table('ramoAtividade',
 	Field('nome_ramo','string',required=True, notnull=True),
 	Field('descricao','text'),
-	Field('forncedor_id','reference fornecedor', writable=False, readable=False),
+	Field('fornecedor_id','reference fornecedor', writable=False, readable=False), 
 	format='%(nome_ramo)')
