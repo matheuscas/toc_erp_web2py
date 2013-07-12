@@ -11,3 +11,14 @@ db.imposto.tipo_imposto.requires = IS_IN_SET(['IPI','ICMS','PIS','COFINS'],zero=
 db.imposto.tipo_aliquota_imposto.requires= IS_IN_SET(['Isento','Substituido', 'Tributado', 'Nao Tributado'],
 	zero=T('Choose an aliquot'))
 db.imposto.situacao_imposto.requires = IS_IN_SET(['ATIVO','INATIVO'],zero=T('Choose a status'))
+
+def valida_trinca_tipo_imposto_tipo_aliquota_e_percentual_imposto(form):
+	print form.vars.tipo_imposto, form.vars.tipo_aliquota_imposto, form.vars.percentual_imposto
+
+	rows = db(db.imposto.tipo_imposto == form.vars.tipo_imposto and 
+		db.imposto.tipo_aliquota_imposto == form.vars.tipo_aliquota_imposto and
+		db.imposto.percentual_imposto == form.vars.percentual_imposto).select()
+	if len(rows) > 0:
+		form.errors.tipo_imposto = 'value already in database'
+		form.errors.tipo_aliquota_imposto = 'value already in database'
+		form.errors.percentual_imposto = 'value already in database'
