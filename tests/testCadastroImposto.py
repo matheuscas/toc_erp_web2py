@@ -35,12 +35,23 @@ class TestCadastroImposto(TestSetUp):
 
 		self.submmit_form()
 
-	def exclui_imposto_de_teste(self):
-		self.db_test(self.db_test.imposto.tipo_aliquota_imposto == self.tipo_aliquota_imposto and
+	def exclui_imposto_de_teste(self,nome_imposto='Imposto x'.upper()):
+		self.db_test(self.db_test.imposto.tipo_aliquota_imposto == nome_imposto and
 			self.db_test.imposto.tipo_imposto == self.tipo_imposto and 
 			self.db_test.imposto.percentual_imposto == self.percentual_imposto).delete()
 
 		self.db_test.commit()		
+
+	def insere_imposto_de_teste_no_banco(self,nome_imposto='Imposto x', 
+		tipo_imposto='IPI',
+		tipo_aliquota_imposto='Tributado', 
+		situacao_imposto='ATIVO',
+		percentual_imposto=7):
+
+		self.db_test.imposto.insert(nome_imposto=nome_imposto.upper(), tipo_imposto=tipo_imposto,
+			tipo_aliquota_imposto=tipo_aliquota_imposto, situacao_imposto=situacao_imposto,
+			percentual_imposto=percentual_imposto)
+		self.db_test.commit()	
 
 	def test_inserir_campos_obrigatorios_vazios(self):
 		self.driver.get(self.url_inserir_imposto)
@@ -63,12 +74,13 @@ class TestCadastroImposto(TestSetUp):
 		assert_percentual = (percentual_erro.text == mensagem_erro_3)
 		assert_situacao = (situacao_erro.text == mensagem_erro_2)
 
-		assert (assert_nome and assert_tipo and assert_aliquota and assert_percentual) == True
+		assert (assert_nome and assert_tipo and assert_aliquota and assert_percentual
+			and assert_situacao) == True
 
 	def test_inserir_campos_obrigatorios_preenchidos(self):		
 		self.driver.get(self.url_inserir_imposto)
 		self.preenche_campos_obrigatorios_e_submit()
-		time.sleep(0.1)
+		time.sleep(0.5)
 		rows = self.db_test(self.db_test.imposto.tipo_aliquota_imposto == self.tipo_aliquota_imposto and
 			self.db_test.imposto.tipo_imposto == self.tipo_imposto and 
 			self.db_test.imposto.percentual_imposto == self.percentual_imposto).select()
@@ -78,10 +90,7 @@ class TestCadastroImposto(TestSetUp):
 
 	def test_inserir_nome_do_imposto_repetido(self):
 		
-		self.db_test.imposto.insert(nome_imposto=self.nome_imposto.upper(), tipo_imposto=self.tipo_imposto,
-			tipo_aliquota_imposto=self.tipo_aliquota_imposto, situacao_imposto=self.situacao_imposto,
-			percentual_imposto=self.percentual_imposto)
-		self.db_test.commit()
+		self.insere_imposto_de_teste_no_banco()
 
 		time.sleep(0.1)
 
@@ -97,7 +106,25 @@ class TestCadastroImposto(TestSetUp):
 		self.exclui_imposto_de_teste()
 	
 	def test_inserir_tipo_imposto_e_tipo_aliquota_e_percentual_repetidos(self):
-		pass
+		imposto_XY = 'Imposto XY'.upper()
+		self.insere_imposto_de_teste_no_banco(nome_imposto=imposto_XY)
+		self.driver.get(self.url_inserir_imposto)
+		self.preenche_campos_obrigatorios_e_submit()
+		time.sleep(0.5)
+
+		tipo_imposto_erro = self.driver.find_element_by_id('tipo_imposto__error')
+		tipo_aliquota_erro = self.driver.find_element_by_id('tipo_aliquota_imposto__error')
+		percentual_erro = self.driver.find_element_by_id('percentual_imposto__error')
+		mensagem_erro_padrao = 'value already in database'
+
+		assert_tipo = (tipo_imposto_erro.text == mensagem_erro_padrao)
+		assert_aliquota = (tipo_aliquota_erro.text == mensagem_erro_padrao)
+		assert_percentual = (percentual_erro.text == mensagem_erro_padrao)
+
+		assert (assert_tipo and assert_aliquota and assert_percentual) == True
+		self.exclui_imposto_de_teste()
+		self.exclui_imposto_de_teste(imposto_XY)
+
 
 	def test_inserir_percentual_abaixo_de_zero(self):
 		pass
@@ -114,4 +141,5 @@ class TestCadastroImposto(TestSetUp):
 		suite.addTest(TestCadastroImposto('test_inserir_campos_obrigatorios_vazios'))
 		suite.addTest(TestCadastroImposto('test_inserir_campos_obrigatorios_preenchidos'))
 		suite.addTest(TestCadastroImposto('test_inserir_nome_do_imposto_repetido'))
+		suite.addTest(TestCadastroImposto('test_inserir_tipo_imposto_e_tipo_aliquota_e_percentual_repetidos'))
 		return suite				
