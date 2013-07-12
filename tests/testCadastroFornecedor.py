@@ -79,7 +79,7 @@ class TestCadastroFornecedor(TestSetUp):
 		
 		self.driver.get(self.url_inserir_fornecedor)
 		self.busca_e_preenche_campos_obrigatorios_e_submit()
-		time.sleep(0.1) #para dar tempo ao commit do banco
+		time.sleep(0.3) #para dar tempo ao commit do banco
 
 		rows = self.db_test(self.db_test.fornecedor.cpf_cnpj == self.cpf_cnpj_num).select()
 
