@@ -29,4 +29,7 @@ class TestSetUp(unittest.TestCase):
 		self.db_test.import_table_definitions(path_to_database)
 
 	def tearDown(self):
-		self.driver.quit()	
+		self.driver.quit()
+
+	def submit_form(self):
+		self.driver.find_element_by_xpath(self.submit_button).click()		
