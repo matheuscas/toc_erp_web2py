@@ -102,7 +102,7 @@ class TestCadastroFornecedor(TestSetUp):
 
 		self.busca_e_preenche_campos_obrigatorios_e_submit()
 
-		time.sleep(0.1)
+		time.sleep(0.5)
 
 		cpf_cnpj_error = self.driver.find_element_by_id("cpf_cnpj__error")
 		mensagem_erro_padrao = 'value already in database or empty'
