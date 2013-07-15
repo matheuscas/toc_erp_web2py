@@ -16,7 +16,7 @@ class TestCadastroImposto(TestSetUp):
 		self.situacao_imposto = 'ATIVO'
 		self.tabela = 'imposto_'
 
-	def submmit_form(self):
+	def submit_form(self):
 		self.driver.find_element_by_xpath(self.submit_button).click()
 
 	def preenche_campos_obrigatorios_e_submit(self):
