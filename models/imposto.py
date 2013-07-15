@@ -15,8 +15,7 @@ db.imposto.percentual_imposto.requires = IS_FLOAT_IN_RANGE(0, 100, dot=".",
 	error_message='enter a number between 0 and 100')
 
 def valida_trinca_tipo_imposto_tipo_aliquota_e_percentual_imposto(form):
-	print form.vars.tipo_imposto, form.vars.tipo_aliquota_imposto, form.vars.percentual_imposto
-
+	#print form.vars.tipo_imposto, form.vars.tipo_aliquota_imposto, form.vars.percentual_imposto
 	rows = db(db.imposto.tipo_imposto == form.vars.tipo_imposto and 
 		db.imposto.tipo_aliquota_imposto == form.vars.tipo_aliquota_imposto and
 		db.imposto.percentual_imposto == form.vars.percentual_imposto).select()
