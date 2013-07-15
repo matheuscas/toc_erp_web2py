@@ -66,7 +66,7 @@ class TestCadastroImposto(TestSetUp):
 
 		mensagem_erro = 'enter a value'
 		mensagem_erro_2 = 'value not allowed'
-		mensagem_erro_3 = 'enter a number between -1e+10 and 1e+10'
+		mensagem_erro_3 = 'enter a number between 0 and 100'
 
 		assert_nome = (nome_imposto_erro.text == mensagem_erro)
 		assert_tipo = (tipo_imposto_erro.text == mensagem_erro_2)
@@ -125,15 +125,37 @@ class TestCadastroImposto(TestSetUp):
 		self.exclui_imposto_de_teste()
 		self.exclui_imposto_de_teste(imposto_XY)
 
-
 	def test_inserir_percentual_abaixo_de_zero(self):
-		pass
+		self.driver.get(self.url_inserir_imposto)
+
+		self.percentual_imposto = -7
+
+		self.preenche_campos_obrigatorios_e_submit()
+
+		time.sleep(0.5)
+
+		percentual_erro = self.driver.find_element_by_id('percentual_imposto__error')
+		mensagem_erro = 'enter a number between 0 and 100'
+
+		assert percentual_erro.text == mensagem_erro
+
+		self.exclui_imposto_de_teste()
 
 	def test_inserir_percentual_acima_de_cem(self):
-		pass
+		self.driver.get(self.url_inserir_imposto)
 
-	def test_inserir_percentual_entre_zero_e_cem(self):
-		pass			
+		self.percentual_imposto = '100.1'
+
+		self.preenche_campos_obrigatorios_e_submit()
+
+		time.sleep(0.5)
+
+		percentual_erro = self.driver.find_element_by_id('percentual_imposto__error')
+		mensagem_erro = 'enter a number between 0 and 100'
+
+		assert percentual_erro.text == mensagem_erro
+
+		self.exclui_imposto_de_teste()
 
 	@classmethod
 	def suite(cls):
@@ -142,4 +164,6 @@ class TestCadastroImposto(TestSetUp):
 		suite.addTest(TestCadastroImposto('test_inserir_campos_obrigatorios_preenchidos'))
 		suite.addTest(TestCadastroImposto('test_inserir_nome_do_imposto_repetido'))
 		suite.addTest(TestCadastroImposto('test_inserir_tipo_imposto_e_tipo_aliquota_e_percentual_repetidos'))
+		suite.addTest(TestCadastroImposto('test_inserir_percentual_abaixo_de_zero'))
+		suite.addTest(TestCadastroImposto('test_inserir_percentual_acima_de_cem'))
 		return suite				
