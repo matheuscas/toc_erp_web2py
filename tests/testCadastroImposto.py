@@ -33,7 +33,7 @@ class TestCadastroImposto(TestSetUp):
 		campo_percentual_imposto.send_keys(self.percentual_imposto)
 		campo_situacao_imposto.send_keys(self.situacao_imposto)
 
-		self.submmit_form()
+		self.submit_form()
 
 	def exclui_imposto_de_teste(self,nome_imposto='Imposto x'.upper()):
 		self.db_test(self.db_test.imposto.tipo_aliquota_imposto == nome_imposto and
@@ -55,27 +55,28 @@ class TestCadastroImposto(TestSetUp):
 
 	def test_inserir_campos_obrigatorios_vazios(self):
 		self.driver.get(self.url_inserir_imposto)
-		self.submmit_form()
+		self.submit_form()
 		time.sleep(0.5)
 
 		nome_imposto_erro = self.driver.find_element_by_id('nome_imposto__error')
-		tipo_imposto_erro = self.driver.find_element_by_id('tipo_imposto__error')
-		tipo_aliquota_erro = self.driver.find_element_by_id('tipo_aliquota_imposto__error')
+		#tipo_imposto_erro = self.driver.find_element_by_id('tipo_imposto__error')
+		#tipo_aliquota_erro = self.driver.find_element_by_id('tipo_aliquota_imposto__error')
 		percentual_erro = self.driver.find_element_by_id('percentual_imposto__error')
-		situacao_erro = self.driver.find_element_by_id('situacao_imposto__error')
+		#situacao_erro = self.driver.find_element_by_id('situacao_imposto__error')
 
 		mensagem_erro = 'enter a value'
 		mensagem_erro_2 = 'value not allowed'
 		mensagem_erro_3 = 'enter a number between 0 and 100'
 
 		assert_nome = (nome_imposto_erro.text == mensagem_erro)
-		assert_tipo = (tipo_imposto_erro.text == mensagem_erro_2)
-		assert_aliquota = (tipo_aliquota_erro.text == mensagem_erro_2)
+		#assert_tipo = (tipo_imposto_erro.text == mensagem_erro_2)
+		#assert_aliquota = (tipo_aliquota_erro.text == mensagem_erro_2)
 		assert_percentual = (percentual_erro.text == mensagem_erro_3)
-		assert_situacao = (situacao_erro.text == mensagem_erro_2)
+		#assert_situacao = (situacao_erro.text == mensagem_erro_2)
 
-		assert (assert_nome and assert_tipo and assert_aliquota and assert_percentual
-			and assert_situacao) == True
+		#assert (assert_nome and assert_tipo and assert_aliquota and assert_percentual
+		#	and assert_situacao) == True
+		assert (assert_nome and assert_percentual) == True
 
 	def test_inserir_campos_obrigatorios_preenchidos(self):		
 		self.driver.get(self.url_inserir_imposto)
