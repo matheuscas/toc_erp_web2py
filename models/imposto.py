@@ -1,9 +1,9 @@
 db.define_table('imposto',
 	Field('nome_imposto','string',required=True,unique=True,notnull=True),
-	Field('tipo_imposto','list:string',required=True),
-	Field('tipo_aliquota_imposto','list:string', required=True),
+	Field('tipo_imposto','string',required=True),
+	Field('tipo_aliquota_imposto','string', required=True),
 	Field('percentual_imposto','decimal(4,2)',required=True, notnull=True),
-	Field('situacao_imposto','list:string',required=True,notnull=True),
+	Field('situacao_imposto','string',required=True,notnull=True),
 	format= '%(nome_imposto), %(tipo_imposto), %(tipo_aliquota_imposto), %(percentual_imposto)')
 
 db.imposto.nome_imposto.requires = [IS_NOT_EMPTY(),IS_UPPER(),CLEANUP(),IS_NOT_IN_DB(db, 'imposto.nome_imposto')]
