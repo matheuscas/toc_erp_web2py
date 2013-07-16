@@ -11,6 +11,7 @@ class TestCadastroSecao(TestSetUp):
 		self.url_inserir_secao = estoque_url_base + acao_inserir
 		self.nome = 'Uma secao qualquer'
 		self.descricao = 'um descricao qualquer'
+		self.situacao = 'INATIVO'
 		self.tabela = 'secao_'
 
 	def exclui_secao_de_teste(self):
@@ -30,6 +31,7 @@ class TestCadastroSecao(TestSetUp):
 		self.driver.get(self.url_inserir_secao)
 		self.driver.find_element_by_id(self.tabela + 'nome').send_keys(self.nome)
 		self.driver.find_element_by_id(self.tabela + 'descricao').send_keys(self.descricao)
+		self.driver.find_element_by_id(self.tabela + 'situacao').send_keys(self.situacao)
 		self.submit_form()
 		time.sleep(0.1)
 
@@ -40,11 +42,22 @@ class TestCadastroSecao(TestSetUp):
 		self.exclui_secao_de_teste()
 
 	def test_inserir_secao_com_nome_repetido(self):
-		pass			
+		self.db_test.secao.insert(nome=self.nome.upper(),situacao=self.situacao)
+		self.db_test.commit()
+		time.sleep(0.1)
+		self.driver.get(self.url_inserir_secao)
+		self.driver.find_element_by_id(self.tabela + 'nome').send_keys(self.nome)
+		self.submit_form()
+		time.sleep(0.5)
+		mensagem_de_erro = 'value already in database or empty'
+		assert self.driver.find_element_by_id('nome__error').text == mensagem_de_erro
+		self.exclui_secao_de_teste()
+
 
 	@classmethod
 	def suite(cls):
 		suite = unittest.TestSuite()
 		suite.addTest(TestCadastroSecao('test_inserir_campos_obrigatorios_vazios'))
 		suite.addTest(TestCadastroSecao('test_inserir_campos_obrigatorios_preenchidos'))
+		suite.addTest(TestCadastroSecao('test_inserir_secao_com_nome_repetido'))
 		return suite	
