@@ -7,6 +7,19 @@ def pesquisar_embalagens():
 	return dict(form=form)
 
 def atualizar_embalagem():
-	#form = SQLFORM(db.embalagem, request.args(0))
-	form = SQLFORM(db.embalagem,request.args(0))
+	crud.settings.update_deletable = False	
+	form = crud.update(db.embalagem, request.args(0))
+	return dict(form=form)	
+
+def inserir_secao():
+	form = crud.create(db.secao)
+	return dict(form=form)
+
+def pesquisar_secoes():
+	form = SQLFORM.grid(db.secao)
+	return dict(form=form)
+
+def atualizar_secao():
+	crud.settings.update_deletable = False
+	form = crud.update(db.secao, request.args(0))
 	return dict(form=form)	
