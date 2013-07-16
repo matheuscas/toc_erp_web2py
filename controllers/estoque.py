@@ -22,4 +22,18 @@ def pesquisar_secoes():
 def atualizar_secao():
 	crud.settings.update_deletable = False
 	form = crud.update(db.secao, request.args(0))
-	return dict(form=form)	
+	return dict(form=form)
+
+def inserir_subsecao():
+	form = crud.create(db.subsecao)
+	return dict(form=form)
+
+def pesquisar_subsecoes():
+	form = SQLFORM.grid(db.subsecao)
+	return dict(form=form)
+
+def	atualizar_subsecao():
+	crud.settings.update_deletable = False
+	form = crud.update(db.subsecao, request.args(0))
+	return dict(form=form)
+	
