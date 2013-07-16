@@ -1,9 +1,9 @@
 import unittest
 import time
 from random import randint
-from testSetup import TestSetUp
+from testSetup import TestSetup
 
-class TestCadastroRamoAtividade(TestSetUp):
+class TestCadastroRamoAtividade(TestSetup):
 	"""docstring for TestCadastroRamoAtividade"""
 	def setUp(self):
 		super(TestCadastroRamoAtividade,self).setUp()

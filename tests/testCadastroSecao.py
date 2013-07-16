@@ -1,8 +1,8 @@
 import unittest
 import time
-from testSetup import TestSetUp
+from testSetup import TestSetup
 
-class TestCadastroSecao(TestSetUp):
+class TestCadastroSecao(TestSetup):
 	"""docstring for TestCadastroSecao"""
 	def setUp(self):
 		super(TestCadastroSecao,self).setUp()

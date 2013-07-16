@@ -1,9 +1,9 @@
 import unittest
 import time
-from testSetup import TestSetUp
+from testSetup import TestSetup
 from selenium.webdriver.support.ui import WebDriverWait # available since 2.4.0
 
-class TestCadastroFornecedor(TestSetUp):
+class TestCadastroFornecedor(TestSetup):
 	"""docstring for TestCadastroFornecedor"""
 	
 	def setUp(self):
