@@ -6,9 +6,9 @@ class TestCadastroEmbalagem(TestSetUp):
 	"""docstring for TestCadastroEmbalagem"""
 	def setUp(self):
 		super(TestCadastroEmbalagem, self).setUp()
-		fiscal_url_base = 'http://127.0.0.1:8000/toc_erp_web2py/estoque'
+		estoque_url_base = 'http://127.0.0.1:8000/toc_erp_web2py/estoque'
 		acao_inserir = '/inserir_embalagem'
-		self.url_inserir_imposto = fiscal_url_base + acao_inserir
+		self.url_inserir_imposto = estoque_url_base + acao_inserir
 		self.nome = 'Mais uma embalagem qualquer'
 		self.unidade_medida = 'CX'
 		self.quantidade_casas_decimais = 1
