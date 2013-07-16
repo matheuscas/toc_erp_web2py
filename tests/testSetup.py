@@ -12,7 +12,7 @@ sys.path.append('../../../') # we need this to use web2py's modules
 from gluon.sql import DAL, Field
 from gluon.validators import *
 
-class TestSetUp(unittest.TestCase):
+class TestSetup(unittest.TestCase):
 	"""docstring for TestSetUp"""
 
 	def setUp(self):
