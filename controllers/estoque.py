@@ -36,4 +36,17 @@ def	atualizar_subsecao():
 	crud.settings.update_deletable = False
 	form = crud.update(db.subsecao, request.args(0))
 	return dict(form=form)
+
+def inserir_fabricante():
+	form = crud.create(db.fabricante)
+	return dict(form = form)
+
+def pesquisar_fabricantes():
+	form = SQLFORM.grid(db.fabricante)
+	return dict(form=form)
+
+def atualizar_fabricante():
+	crud.settings.update_deletable = False
+	form = crud.update(db.fabricante,request.args(0))
+	return dict(form=form)			
 	
