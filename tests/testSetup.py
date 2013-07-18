@@ -32,4 +32,8 @@ class TestSetup(unittest.TestCase):
 		self.driver.quit()
 
 	def submit_form(self):
-		self.driver.find_element_by_xpath(self.submit_button).click()		
+		self.driver.find_element_by_xpath(self.submit_button).click()	
+
+	def limpa_dados_tabela(self, nome_tabela):
+		self.db_test.executesql('delete from ' + nome_tabela)
+		self.db_test.commit()		
