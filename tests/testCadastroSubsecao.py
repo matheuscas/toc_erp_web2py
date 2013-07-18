@@ -12,6 +12,7 @@ class TestCadastroSubsecao(TestSetup):
 		self.nome = 'uma subsecao qualquer'
 		self.descricao = 'uma descricao qualquer'
 		self.situacao = 'INATIVO'
+		self.limpa_dados_tabela('subsecao')
 
 	def exclui_subsecao_de_teste(self):
 		self.db_test(self.db_test.subsecao.nome == self.nome.upper()).delete()

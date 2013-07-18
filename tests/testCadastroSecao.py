@@ -13,6 +13,7 @@ class TestCadastroSecao(TestSetup):
 		self.descricao = 'um descricao qualquer'
 		self.situacao = 'INATIVO'
 		self.tabela = 'secao_'
+		self.limpa_dados_tabela('secao')
 
 	def exclui_secao_de_teste(self):
 		self.db_test(self.db_test.secao.nome == self.nome.upper()).delete()
@@ -33,13 +34,10 @@ class TestCadastroSecao(TestSetup):
 		self.driver.find_element_by_id(self.tabela + 'descricao').send_keys(self.descricao)
 		self.driver.find_element_by_id(self.tabela + 'situacao').send_keys(self.situacao)
 		self.submit_form()
-		time.sleep(0.1)
+
+		time.sleep(0.2)
 
 		assert (len(self.db_test(self.db_test.secao.nome == self.nome.upper()).select()) > 0) == True
-
-		time.sleep(0.1)
-
-		self.exclui_secao_de_teste()
 
 	def test_inserir_secao_com_nome_repetido(self):
 		self.db_test.secao.insert(nome=self.nome.upper(),situacao=self.situacao)

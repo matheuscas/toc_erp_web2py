@@ -15,6 +15,7 @@ class TestCadastroImposto(TestSetup):
 		self.percentual_imposto = 7
 		self.situacao_imposto = 'ATIVO'
 		self.tabela = 'imposto_'
+		self.limpa_dados_tabela('imposto')
 
 	def submit_form(self):
 		self.driver.find_element_by_xpath(self.submit_button).click()

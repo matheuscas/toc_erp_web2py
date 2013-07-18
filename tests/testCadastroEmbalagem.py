@@ -13,6 +13,7 @@ class TestCadastroEmbalagem(TestSetup):
 		self.unidade_medida = 'CX'
 		self.quantidade_casas_decimais = 1
 		self.tabela = 'embalagem_'
+		self.limpa_dados_tabela('embalagem')
 
 	def preenche_campos_obrigatorios_e_submit(self):
 		self.driver.get(self.url_inserir_imposto)

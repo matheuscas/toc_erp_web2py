@@ -12,7 +12,8 @@ class TestCadastroRamoAtividade(TestSetup):
 		self.acao_atualizar = '/atualizar_ramo_atividade'
 		self.url_inserir_ramoAtividade = self.compras_url_base + self.acao_inserir
 		self.url_atualizar_ramoAtividade = self.compras_url_base + self.acao_atualizar
-		self.nome_ramoAtividade = "ramo qualquer_test" 
+		self.nome_ramoAtividade = "ramo qualquer_test"
+		self.limpa_dados_tabela('ramoAtividade') 
 
 	def preenche_campos_obrigatorios(self):
 		nome = self.driver.find_element_by_id("ramoAtividade_nome_ramo")	
@@ -36,7 +37,7 @@ class TestCadastroRamoAtividade(TestSetup):
 		self.nome_ramoAtividade = self.nome_ramoAtividade + str(rand)
 		self.preenche_campos_obrigatorios()
 		self.driver.find_element_by_xpath(self.submit_button).click()
-		time.sleep(0.1)
+		time.sleep(0.5)
 		rows = self.db_test(self.db_test.ramoAtividade.nome_ramo == self.nome_ramoAtividade).select()
 		assert rows[0].nome_ramo == self.nome_ramoAtividade
 		self.exclui_ramo_ativdade_de_teste()

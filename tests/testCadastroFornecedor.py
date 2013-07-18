@@ -15,6 +15,7 @@ class TestCadastroFornecedor(TestSetup):
 		self.url_inserir_fornecedor = self.compras_url_base + self.inserir_fornecedor
 		self.url_atualizar_fornecedor = self.compras_url_base + self.atualizar_fornecedor
 		self.cpf_cnpj_num = "02441251591"
+		self.limpa_dados_tabela('fornecedor')
 
 	def busca_e_preenche_campos_obrigatorios_e_submit(self):
 
