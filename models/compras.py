@@ -5,7 +5,7 @@ db.define_table('endereco',
 	Field('cidade','string',required=True, notnull=True),
 	Field('estado','string',required=True, notnull=True),
 	Field('cep','string',length=8),
-	format='%(rua), %(numero), %(bairro)')
+	format="%(rua)s %(numero)s %(bairro)s")
 
 db.define_table('contato',
 	Field('nome_contato','string'),
