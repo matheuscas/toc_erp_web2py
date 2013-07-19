@@ -50,7 +50,7 @@ class TestCadastroFabricante(TestSetup):
 		self.driver.get(self.url_inserir_fabricante)
 		endereco_id = self.insere_endereco_de_teste()
 		self.preenche_campos_obrigatorios_e_submit()
-		time.sleep(0.1)
+		time.sleep(0.5)
 		assert (len(self.db_test(self.db_test.fabricante.cpf_cnpj == self.cpf_cnpj).select()) > 0) == True
 		self.exclui_fabricante_de_teste()
 		self.exclui_endereco_de_teste(endereco_id)
