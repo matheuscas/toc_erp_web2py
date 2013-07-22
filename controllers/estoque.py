@@ -56,8 +56,7 @@ def atualizar_fabricante():
 
 #MARCA
 def inserir_marca():
-	crud.settings.update_deletable = False
-	form = crud.create(db.marca, request.args(0))
+	form = crud.create(db.marca)
 	return dict(form=form)
 
 def pesquisar_marcas():
@@ -68,3 +67,17 @@ def atualizar_marca():
 	crud.settings.update_deletable = False
 	form = crud.update(db.marca, request.args(0))
 	return dict(form=form)
+
+#PRODUTO
+def inserir_produto():
+	form = crud.create(db.produto)	
+	return dict(form=form)
+
+def pesquisar_produtos():
+	form = SQLFORM.grid(db.produto)
+	return dict(form=form)
+
+def atualizar_produto():
+	crud.settings.update_deletable = False
+	form = crud.update(db.produto, request.args(0))
+	return dict(form=form)		
