@@ -9,7 +9,6 @@ class TestCadastroProduto(TestSetup):
 		compras_url_base = 'http://localhost:8000/toc_erp_web2py/estoque/'
 		controller_inserir = 'inserir_produto'
 		self.url_inserir_produto = compras_url_base + controller_inserir
-		self.limpa_dados_tabela('produto')
 		self.nome = 'Um produto qualquer'
 		self.unidade_medida = 'UN'
 		self.limpa_dados_tabela('marca')
