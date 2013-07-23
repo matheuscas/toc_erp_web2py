@@ -8,5 +8,5 @@ def pesquisar_condicoes_pagamento():
 
 def atualizar_condicao_pagamento():
 	crud.settings.update_deletable = False
-	form = crud.create(db.condicao_pagamento, request.args(0))
+	form = crud.update(db.condicao_pagamento, request.args(0))
 	return dict(form=form)		
