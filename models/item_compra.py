@@ -1,0 +1,10 @@
+db.define_table('item_compra',
+	Field('produto_id','reference produto'),
+	Field('descricao'),
+	Field('preco_unitario','double'),
+	Field('quantidade','double'),
+	Field('unidade_compra'),
+	Field('quantidade_embalagem','double'),
+	Field('aliquota_icms','decimal(4,2)'),
+	Field('total','double'),
+	format='%(produto_id)s %(descricao)s')
