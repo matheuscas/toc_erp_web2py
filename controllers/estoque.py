@@ -80,4 +80,9 @@ def pesquisar_produtos():
 def atualizar_produto():
 	crud.settings.update_deletable = False
 	form = crud.update(db.produto, request.args(0))
+	return dict(form=form)	
+
+#ESTOQUE
+def pesquisar_estoque():
+	form = SQLFORM.grid(db.registro_estoque)
 	return dict(form=form)		
