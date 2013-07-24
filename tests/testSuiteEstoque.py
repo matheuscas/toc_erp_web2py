@@ -5,9 +5,11 @@ from testCadastroSubsecao import TestCadastroSubsecao
 from testCadastroFabricante import TestCadastroFabricante
 from testCadastroMarca import TestCadastroMarca
 from testCadastroProduto import TestCadastroProduto
+from test_modulo_estoque_estoquista import TestEstoquista
 
 def suite_estoque():
 	suite = unittest.TestSuite()
+	#cadastros
 	suite_embalagem = TestCadastroEmbalagem.suite()
 	suite_secao = TestCadastroSecao.suite()
 	suite_subsecao = TestCadastroSubsecao.suite()
@@ -20,5 +22,10 @@ def suite_estoque():
 	suite.addTest(suite_fabricante)
 	suite.addTest(suite_marca)
 	suite.addTest(suite_produto)
+
+	#modulos
+	suite_modulo_estoque = TestEstoquista.suite()
+	suite.addTest(suite_modulo_estoque)
+	
 	return suite
 	
