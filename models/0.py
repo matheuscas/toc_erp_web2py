@@ -9,6 +9,8 @@
 ## be redirected to HTTPS, uncomment the line below:
 # request.requires_https()
 
+from gluon.custom_import import track_changes; track_changes(True)
+
 db_username_postgres = 'postgres'
 db_password_postgres = '1234'
 db_postgres_url = 'postgres://' + db_username_postgres + ':' + db_password_postgres + '@localhost/dev'
@@ -33,6 +35,10 @@ response.generic_patterns = ['*'] if request.is_local else []
 ## (optional) optimize handling of static files
 # response.optimize_css = 'concat,minify,inline'
 # response.optimize_js = 'concat,minify,inline'
+
+#passa o db para current para o mesmo possa ser usado nos modulos
+from gluon import current
+current.db = db
 
 #########################################################################
 ## Here is sample code if you need for
