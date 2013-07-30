@@ -10,7 +10,7 @@ db.define_table('endereco',
 db.define_table('contato',
 	Field('nome_contato','string'),
 	Field('telefone_contato','string'), 
-	format='%(nome_contato) - %(telefone_contato)')
+	format='%(nome_contato)s - %(telefone_contato)s')
 
 db.define_table('fornecedor',
 	Field('nome','string',required=True, notnull=True),
@@ -21,10 +21,10 @@ db.define_table('fornecedor',
 	Field('telefone','string'),
 	Field('contato_id','reference contato', writable=False, readable=False),
 	Field('historico','text'),
-	format='%(nomeFantasia) - %(cpf_cnpj)')
+	format='%(nomeFantasia)s - %(cpf_cnpj)s')
 
 db.define_table('ramoAtividade',
 	Field('nome_ramo','string',required=True, notnull=True),
 	Field('descricao','text'),
 	Field('fornecedor_id','reference fornecedor', writable=False, readable=False), 
-	format='%(nome_ramo)')
+	format='%(nome_ramo)s')
