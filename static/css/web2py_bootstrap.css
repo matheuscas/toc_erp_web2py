@@ -207,6 +207,25 @@ td.w2p_fw ul{margin-left:0px;}
 /* auth_user_remember checkbox extrapadding in IE fix */
 .ie-lte9 input#auth_user_remember.checkbox {padding-left:0;}
 
+/*NOTA DE COMPRAS */
+#nota_fiscal_compra_numero {width: 200px;}
+#nota_fiscal_compra_natureza_operacao {width: 200px;}
+#nota_fiscal_compra_data_emissao {width: 100px;}
+#nota_fiscal_compra_data_chegada {width: 100px;}
+#nota_fiscal_compra_base_calculo_icms {width: 200px;}
+#nota_fiscal_compra_valor_icms {width: 200px;}
+#nota_fiscal_compra_frete {width: 200px;}
+#nota_fiscal_compra_desconto {width: 200px;}
+#nota_fiscal_compra_outras {width: 100px;}
+#nota_fiscal_compra_valor_ipi {width: 100px;}
+
+#comprasteste .tamanho_fixo_1 .error {
+  width: 200px;
+}
+#comprasteste .tamanho_fixo_2 .error {
+  width: 100px;
+}
+
 /*=============================================================
                        MEDIA QUERIES
 ==============================================================*/
