@@ -42,7 +42,6 @@ class Estoquista(object):
 			if len(item_estoque) > 0:
 				self.atualizar_registro_de_entrada_no_estoque(item_estoque,item_da_nota_fiscal)
 			else:
-				self.criar_registro_de_entrada_no_estoque(item_da_nota_fiscal)																					
-
+				self.criar_registro_de_entrada_no_estoque(item_da_nota_fiscal)	
 
 			
