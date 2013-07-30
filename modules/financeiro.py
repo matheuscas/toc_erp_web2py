@@ -55,3 +55,10 @@ class GerenteFinanceiro(object):
 											status=status, valor_parcela=valor_parcela)
 		self.db_copy.commit()	
 		
+
+	def gerar_credito_debito_de_conta_a_pagar(self, conta_pagar_id):
+		conta_pagar = self.db_copy.conta_pagar[conta_pagar_id]
+		self.db_copy.lancamento_contabil.insert(valor=conta_pagar.valor_parcela,conta_credito='COMPRAS',
+												conta_debito='CAIXA', transacao=conta_pagar.numero_titulo,
+												data_lancamento=conta_pagar.data_vencimento)
+		self.db_copy.commit()											
