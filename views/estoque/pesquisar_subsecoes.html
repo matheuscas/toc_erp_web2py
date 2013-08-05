@@ -1,0 +1,11 @@
+{{left_sidebar_enabled=True}}
+{{extend 'layout.html'}}
+{{block left_sidebar}}
+{{=DIV(UL(
+	LI('Estoque / Subsecoes', _class='nav-header'),
+	LI(A('Inserir subsecao',_href=URL('estoque','inserir_subsecao'))),
+	LI(A('Voltar para Estoque',_href=URL('estoque','pesquisar_estoque'))),
+_class='nav nav-list'),_class='well sidebar-nav')}}
+{{end}}
+<h3>Pesquisa de subsecoes</h3>
+{{=form}}
