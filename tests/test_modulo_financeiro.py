@@ -77,6 +77,6 @@ class TestGerenteFinanceiro(TestModuleSetup):
 	@classmethod
 	def suite(cls):
 		suite = unittest.TestSuite()
-		#suite.addTest(TestGerenteFinanceiro('test_gerar_automaticamente_conta_pagar_fornecedor'))
+		suite.addTest(TestGerenteFinanceiro('test_gerar_automaticamente_conta_pagar_fornecedor'))
 		suite.addTest(TestGerenteFinanceiro('test_gerar_credito_debito_de_conta_a_pagar'))
 		return suite	
