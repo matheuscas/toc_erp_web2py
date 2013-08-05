@@ -5,8 +5,7 @@ from os import path
 
 sys.path.append('../../../') # we need this to use web2py's modules
 
-from gluon.sql import DAL, Field
-from gluon.validators import *
+from gluon import current
 
 class GerenteFinanceiro(object):
 	"""docstring for GerenteFinanceiro"""
@@ -21,16 +20,19 @@ class GerenteFinanceiro(object):
 
 	def gerar_automaticamente_conta_pagar_fornecedor(self, nota_fiscal_compra):
 
-		condicao_pagamento = self.db_copy(self.db_copy.condicao_pagamento.id == 
+		#condicao_pagamento = self.db_copy(self.db_copy.condicao_pagamento.id == 
+		#								nota_fiscal_compra.condicao_pagamento_id).select()
+		
+		condicao_pagamento = current.db(current.db.condicao_pagamento.id == 
 										nota_fiscal_compra.condicao_pagamento_id).select()
 
 		quantidade_parcelas = condicao_pagamento[0].numero_parcelas
 
-		numero_titulo = str(nota_fiscal_compra.fornecedor_id) + nota_fiscal_compra.numero
+		numero_titulo = str(nota_fiscal_compra.fornecedor_id) + str(nota_fiscal_compra.numero)
 		numero_documento = '1'
 		categoria = 'FORNECEDOR'
 		historico = ' TITULO A PAGAR REF. AO DOCUMENTO ' + numero_documento + ' DA NF DE COMPRAS ' \
-						+ nota_fiscal_compra.numero;
+						+ str(nota_fiscal_compra.numero);
 		data_emissao = nota_fiscal_compra.data_emissao
 		data_vencimento_delta = datetime.timedelta(days=30)
 		data_criacao = datetime.date.today()
@@ -38,14 +40,14 @@ class GerenteFinanceiro(object):
 		status = 'ABERTO'
 
 		valor_parcela = valor_nominal / quantidade_parcelas
-		diff = valor_nominal - (valor_parcela * quantidade_parcelas)						
+		diff = valor_nominal - (valor_parcela * quantidade_parcelas)
 
 		for p in range(1, quantidade_parcelas + 1):
 
 			if p == quantidade_parcelas:
 				valor_parcela + diff
 
-			self.db_copy.conta_pagar.insert(numero_titulo=numero_titulo, parcela=p, 
+			_id = current.db.conta_pagar.insert(numero_titulo=numero_titulo, parcela=p, 
 											numero_documento=numero_documento, 
 											numero_nota_fiscal=nota_fiscal_compra.numero,
 											fornecedor_id=nota_fiscal_compra.fornecedor_id,categoria=categoria,
@@ -53,12 +55,13 @@ class GerenteFinanceiro(object):
 											data_vencimento=(data_emissao + (data_vencimento_delta * p)),
 											data_criacao=data_criacao, valor_nominal=valor_nominal,
 											status=status, valor_parcela=valor_parcela)
-		self.db_copy.commit()	
+			current.db.commit()
+			self.gerar_credito_debito_de_conta_a_pagar(_id)
 		
 
 	def gerar_credito_debito_de_conta_a_pagar(self, conta_pagar_id):
-		conta_pagar = self.db_copy.conta_pagar[conta_pagar_id]
-		self.db_copy.lancamento_contabil.insert(valor=conta_pagar.valor_parcela,conta_credito='COMPRAS',
+		conta_pagar = current.db.conta_pagar[conta_pagar_id]
+		current.db.lancamento_contabil.insert(valor=conta_pagar.valor_parcela,conta_credito='COMPRAS',
 												conta_debito='CAIXA', transacao=conta_pagar.numero_titulo,
 												data_lancamento=conta_pagar.data_vencimento)
-		self.db_copy.commit()											
+		current.db.commit()											
