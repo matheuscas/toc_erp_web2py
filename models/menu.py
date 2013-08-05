@@ -8,8 +8,8 @@
 response.logo = A(B('web',SPAN(2),'py'),XML('&trade;&nbsp;'),
                   _class="brand",_href="http://www.web2py.com/")
 #response.title = request.application.replace('_',' ').title()
-response.title = 'projeto luna - prototipo 1'
-response.subtitle = T('Teste de conceito')
+response.title = 'Projeto Luna'
+response.subtitle = T('Prototipo')
 
 ## read more at http://dev.w3.org/html5/markup/meta.name.html
 response.meta.author = 'Your Name <you@example.com>'
@@ -25,10 +25,24 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Home'), False, URL('default', 'index'), [])
-]
+    (T('Home'), False, URL('default', 'index'), []),
+    (T('Compras'),False,URL('compras', 'inserir_fornecedor'), [
+      (T('Fornecedores'),False,URL('compras', 'listar_fornecedores'))]),
+    (T('Estoque'),False,URL('estoque','pesquisar_estoque'),[
+      (T('Produtos'),False,URL('estoque','pesquisar_produtos')),
+      (T('Embalagens'),False,URL('estoque','pesquisar_embalagens')),
+      (T('Secoes'),False,URL('estoque','pesquisar_secoes')),
+      (T('Subsecoes'),False,URL('estoque','pesquisar_subsecoes')),
+      (T('Fabricantes'),False,URL('estoque','pesquisar_fabricantes')),
+      (T('Marcas'),False,URL('estoque','pesquisar_marcas'))]),
+    (T('Financeiro'),False,URL('financeiro','pesquisar_condicoes_pagamento'),[
+      (T('Condicoes de Pagamento'),False,URL('financeiro','pesquisar_condicoes_pagamento'))]),
+    (T('Fiscal'),False,URL('fiscal','pesquisar_imposto'),[
+      (T('Impostos'),False,URL('fiscal','pesquisar_imposto'))])
 
-DEVELOPMENT_MENU = True
+]
+  
+DEVELOPMENT_MENU = False
 
 #########################################################################
 ## provide shortcuts for development. remove in production
