@@ -1,0 +1,15 @@
+{{left_sidebar_enabled=True}}
+{{extend 'layout.html'}}
+{{block left_sidebar}}
+{{=DIV(UL(
+	LI(B('Estoque'), _class='nav-header'),
+	LI(A('Produtos',_href=URL('estoque','pesquisar_produtos'))),
+	LI(A('Embalagens',_href=URL('estoque','pesquisar_embalagens'))),
+	LI(A('Secoes',_href=URL('estoque','pesquisar_secoes'))),
+	LI(A('Subsecoes',_href=URL('estoque','pesquisar_subsecoes'))),
+	LI(A('Fabricantes',_href=URL('estoque','pesquisar_fabricantes'))),
+	LI(A('Marcas',_href=URL('estoque','pesquisar_marcas'))),
+_class='nav nav-list'),_class='well sidebar-nav')}}
+{{end}}
+<h3>Produtos em estoque</h3>
+{{=form}}
