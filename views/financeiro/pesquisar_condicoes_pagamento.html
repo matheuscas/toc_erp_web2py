@@ -1,0 +1,11 @@
+{{left_sidebar_enabled=True}}
+{{extend 'layout.html'}}
+{{block left_sidebar}}
+{{=DIV(UL(
+	LI('Financeiro / Condicoes de pagamento', _class='nav-header'),
+	LI(A('Inserir condicao de pagamento',_href=URL('financeiro','inserir_condicao_pagamento'))),
+	LI(A('Voltar para Financeiro',_href=URL('financeiro','pesquisar_condicoes_pagamento'))),
+_class='nav nav-list'),_class='well sidebar-nav')}}
+{{end}}
+<h3>Pesquisa de condicoes de pagamento</h3>
+{{=form}}
