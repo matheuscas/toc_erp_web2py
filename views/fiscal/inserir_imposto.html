@@ -1,0 +1,11 @@
+{{left_sidebar_enabled=True}}
+{{extend 'layout.html'}}
+{{block left_sidebar}}
+{{=DIV(UL(
+	LI('Fiscal / Impostos / Cadastro de impostos', _class='nav-header'),
+	LI(A('Pesquisar impostos',_href=URL('fiscal','pesquisar_imposto'))),
+	LI(A('Voltar para Fiscal',_href=URL('fiscal','pesquisar_imposto'))),
+_class='nav nav-list'),_class='well sidebar-nav')}}
+{{end}}
+<h3>Cadastro de imposto</h3>
+{{=form}}
