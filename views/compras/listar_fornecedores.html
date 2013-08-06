@@ -1,7 +1,11 @@
 {{left_sidebar_enabled=True}}
 {{extend 'layout.html'}}
 {{block left_sidebar}}
-{{=DIV(UL(LI(A('Cadastrar fornecedor',_href=URL('compras','inserir_fornecedor'))),_class='nav nav-list'),_class='well sidebar-nav')}}
+{{=DIV(UL(
+	LI('Compras / Fornecedores', _class='nav-header'),
+	LI(A('Inserir fornecedor',_href=URL('compras','inserir_fornecedor'))),
+	LI(A('Voltar para Compras',_href=URL('compras','listar_fornecedores'))),
+_class='nav nav-list'),_class='well sidebar-nav')}}
 {{end}}
-<h3>Pesquisar de fornecedores</h3>
+<h3>Pesquisa de fornecedores</h3>
 {{=form}}
