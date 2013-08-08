@@ -19,7 +19,8 @@ def index():
     return auth.wiki()
     """
     response.flash = T("Bem-vindo ao Projeto Luna")
-    return dict(message=T('Teste de conceito'))
+    redirect(URL('compras', 'listar_fornecedores'))
+    #return dict(message=T('Teste de conceito'))
 
 
 def user():
