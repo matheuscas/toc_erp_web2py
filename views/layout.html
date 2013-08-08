@@ -77,8 +77,10 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-	{{=response.logo or ''}}
-        <ul id="navbar" class="nav pull-right">{{='auth' in globals() and auth.navbar(mode="dropdown") or ''}}</ul>
+	     {{=response.logo or ''}}
+        <!--<ul id="navbar" class="nav pull-right">{{='auth' in globals() and auth.navbar(mode="dropdown") or ''}}
+        </ul>-->
+
         <div class="nav-collapse">
           {{is_mobile=request.user_agent().is_mobile}}
           {{if response.menu:}}
@@ -108,7 +110,7 @@
         {{if left_sidebar_enabled:}}
         <div class="span3 left-sidebar">
             {{block left_sidebar}}
-            <h3>Left Sidebar</h3>
+            <!--<h3>Left Sidebar</h3>-->
             <p></p>
             {{end}}
         </div>
@@ -163,7 +165,7 @@
     'Google Analytics':{trackingId:'{{=response.google_analytics_id}}'} 
   });</script>
   {{pass}}
-  <script src="{{=URL('static','js/share.js',vars=dict(static=URL('static','images')))}}"></script>
+  <script src="{{=URL('static','js/share.js',vars=dict(static=URL('static','images')))}}"></script>  
 </body>
 </html>
 
