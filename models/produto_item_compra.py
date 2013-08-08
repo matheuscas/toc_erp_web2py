@@ -1,6 +1,6 @@
 db.define_table('item_compra',
 	Field('produto_id','integer','reference produto',required=True, notnull=True),
-	Field('nota_fiscal_id','integer','reference nota_fiscal_compra',required=True, notnull=True)
+	Field('nota_fiscal_id','integer','reference nota_fiscal_compra',required=True, notnull=True),
 	Field('descricao'),
 	Field('preco_unitario','double'),
 	Field('quantidade','double'),
