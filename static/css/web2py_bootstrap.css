@@ -218,6 +218,10 @@ td.w2p_fw ul{margin-left:0px;}
 #nota_fiscal_compra_desconto {width: 200px;}
 #nota_fiscal_compra_outras {width: 100px;}
 #nota_fiscal_compra_valor_ipi {width: 100px;}
+#unidade_compra{width: 200px;}
+#produto_id{width: 200px}
+#descricao{width: 200px}
+#preco_unitario{width: 200px}
 
 #comprasteste .tamanho_fixo_1 .error {
   width: 200px;
