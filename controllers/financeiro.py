@@ -3,7 +3,7 @@ def inserir_condicao_pagamento():
 	return dict(form=form)
 
 def pesquisar_condicoes_pagamento():
-	form = SQLFORM.grid(db.condicao_pagamento)
+	form = SQLFORM.grid(db.condicao_pagamento, user_signature=False)
 	return dict(form=form)
 
 def atualizar_condicao_pagamento():

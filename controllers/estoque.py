@@ -4,7 +4,7 @@ def inserir_embalagem():
 	return dict(form=form)
 
 def pesquisar_embalagens():
-	form = SQLFORM.grid(db.embalagem)
+	form = SQLFORM.grid(db.embalagem, user_signature=False)
 	return dict(form=form)
 
 def atualizar_embalagem():
@@ -18,7 +18,7 @@ def inserir_secao():
 	return dict(form=form)
 
 def pesquisar_secoes():
-	form = SQLFORM.grid(db.secao)
+	form = SQLFORM.grid(db.secao,user_signature=False)
 	return dict(form=form)
 
 def atualizar_secao():
@@ -32,7 +32,7 @@ def inserir_subsecao():
 	return dict(form=form)
 
 def pesquisar_subsecoes():
-	form = SQLFORM.grid(db.subsecao)
+	form = SQLFORM.grid(db.subsecao,user_signature=False)
 	return dict(form=form)
 
 def	atualizar_subsecao():
@@ -46,7 +46,7 @@ def inserir_fabricante():
 	return dict(form = form)
 
 def pesquisar_fabricantes():
-	form = SQLFORM.grid(db.fabricante)
+	form = SQLFORM.grid(db.fabricante,user_signature=False)
 	return dict(form=form)
 
 def atualizar_fabricante():
@@ -60,7 +60,7 @@ def inserir_marca():
 	return dict(form=form)
 
 def pesquisar_marcas():
-	form = SQLFORM.grid(db.marca)
+	form = SQLFORM.grid(db.marca, user_signature=False)
 	return dict(form=form)
 
 def atualizar_marca():
@@ -74,7 +74,7 @@ def inserir_produto():
 	return dict(form=form)
 
 def pesquisar_produtos():
-	form = SQLFORM.grid(db.produto)
+	form = SQLFORM.grid(db.produto,user_signature=False)
 	return dict(form=form)
 
 def atualizar_produto():

@@ -4,7 +4,7 @@ def inserir_imposto():
 	return dict(form=form)
 
 def pesquisar_imposto():
-	form=SQLFORM.grid(db.imposto)
+	form=SQLFORM.grid(db.imposto, user_signature=False)
 	return dict(form=form)
 
 def atualizar_imposto():
