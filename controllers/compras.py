@@ -1,3 +1,6 @@
+import compras
+import financeiro
+import estoque
 
 def inserir_fornecedor():
 	form = SQLFORM.factory(db.fornecedor, db.endereco, db.contato)
@@ -37,10 +40,9 @@ def atualizar_fornecedor():
 		response.flash = 'Registro nao atualizado. Verifique o preenchimento.'
 	return dict(form_fornecedor=form_fornecedor)	   
 
-
 def listar_fornecedores():	
-	grid = SQLFORM.grid(db.fornecedor)
-	return locals()
+	grid = SQLFORM.grid(db.fornecedor,user_signature=False)
+	return dict(form=grid)
 
 #RAMOS DE ATIVIDADE
 def inserir_ramo_atividade():
@@ -56,4 +58,27 @@ def inserir_ramo_atividade():
 		response.flash = 'Ramo de atividade alterado com sucesso.'
 	elif form.errors:
 		response.flash = 'Registro nao atualizado. Verifique o preenchimento.'	
-	return dict(form=form)"""	
+	return dict(form=form)"""
+
+def nota_fiscal_compra():
+	form = SQLFORM(db.nota_fiscal_compra)
+
+	if form.process().accepted:
+		#cria objeto da Nota fiscal
+		#cria lista de objetos de itens da nota fiscal
+		#Passa o objeto para metodo que gera a conta a pagar ao fornecedor
+		#Passa o objeto para metodo que gera debito e credito da transacao
+		#Passa lista de itens para metodo de estoque para atualiza-lo
+		"""capa_nota_fiscal = compras.NotaFiscalCompra(form.vars.numero,form.vars.data_emissao,
+													form.vars.data_chegada,form.vars.natureza_operacao,
+													form.vars.fornecedor_id,form.vars.base_calculo_icms,
+													form.vars.valor_icms,form.vars.valor_ipi,
+													form.vars.frete, form.vars.outras, form.vars.desconto,
+													form.vars.condicao_pagamento_id, form.vars.total)
+		gerenteFinanceiro = financeiro.GerenteFinanceiro()
+		gerenteFinanceiro.gerar_automaticamente_conta_pagar_fornecedor(capa_nota_fiscal)"""
+
+		response.flash = 'Registro inserido com sucesso'
+	elif form.errors:
+		response.flash = 'O formulario contem erros.'
+	return dict(form=form)
