@@ -218,10 +218,6 @@ td.w2p_fw ul{margin-left:0px;}
 #nota_fiscal_compra_desconto {width: 200px;}
 #nota_fiscal_compra_outras {width: 100px;}
 #nota_fiscal_compra_valor_ipi {width: 100px;}
-#unidade_compra{width: 200px;}
-#produto_id{width: 200px}
-#descricao{width: 200px}
-#preco_unitario{width: 200px}
 
 #comprasteste .tamanho_fixo_1 .error {
   width: 200px;
@@ -252,4 +248,26 @@ td.w2p_fw ul{margin-left:0px;}
   input[type="text"],input[type="password"],select{
     width:95%;
   }
+}
+
+/*==============================================================
+                    CUSTOM CSS (POR THAINAN)
+===============================================================*/
+
+#itens th {
+	width: 120px;
+}
+.tamanho_fixo_3 {
+  width: 80px;
+  float: left;
+  margin-left: 50px;
+}
+.tamanho_fixo_3:first-child {
+  margin-left: 0;
+}
+.tamanho_fixo_3 input[type=text] {
+  width: 80px;
+}
+.clear {
+  clear: both;
 }
