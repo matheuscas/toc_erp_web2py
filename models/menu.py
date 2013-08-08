@@ -25,8 +25,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Home'), False, URL('default', 'index'), []),
-    (T('Compras'),False,URL('compras', 'inserir_fornecedor'), [
+    (T('Compras'),False,URL('compras', 'listar_fornecedores'), [
       (T('Fornecedores'),False,URL('compras', 'listar_fornecedores'))]),
     (T('Estoque'),False,URL('estoque','pesquisar_estoque'),[
       (T('Produtos'),False,URL('estoque','pesquisar_produtos')),
