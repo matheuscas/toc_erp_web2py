@@ -1,5 +1,5 @@
 db.define_table('nota_fiscal_compra',
-	Field('numero','integer',required=True, notnull=True),
+	Field('numero','integer',required=True, notnull=True, unique=True),
 	Field('data_emissao','date',required=True, notnull=True),
 	Field('data_chegada','date',required=True, notnull=True),
 	Field('natureza_operacao',required=True, notnull=True),
@@ -12,5 +12,5 @@ db.define_table('nota_fiscal_compra',
 	Field('outras','double'),
 	Field('desconto','decimal(4,2)'),
 	Field('condicao_pagamento_id','reference condicao_pagamento'),
-	Field('total','double'),
+	Field('total','double',required=True, notnull=True),
 	format='%(numero)s')
