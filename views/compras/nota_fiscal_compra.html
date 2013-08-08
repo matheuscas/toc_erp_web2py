@@ -1,0 +1,182 @@
+{{extend 'layout.html'}}
+
+{{=form.custom.begin}}
+<div id='comprasteste' class="span12">
+	<div class="row-fluid">
+		<label><strong>DADOS GERAIS</strong></label>
+		<div class="span12">
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="span3 tamanho_fixo_1">
+						<label>Fornecedor</label>
+						{{=form.custom.widget.fornecedor_id}}
+					</div>
+				</div>				
+			</div>
+			<div class="row-fluid">
+				<div class="span12">
+				<div class="span3 tamanho_fixo_1">
+					<label>Numero da nota</label>
+					{{=form.custom.widget.numero}}
+				</div>
+				<div class="span3 tamanho_fixo_1">
+					<label>CFOP</label>
+					{{=form.custom.widget.natureza_operacao}}
+				</div>
+				<div class="span2 tamanho_fixo_2">
+					<label>Data de emissao</label>
+					{{=form.custom.widget.data_emissao}}
+				</div>
+				<div class="span2 tamanho_fixo_2">
+					<label>Data de chegada</label>
+					{{=form.custom.widget.data_chegada}}
+				</div>
+					</div>
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<label><strong>FATURA</strong></label>
+		<div class="span12">
+			<div class="span3 tamanho_fixo_1">
+				<label>Condicao de pagamento</label>
+				{{=form.custom.widget.condicao_pagamento_id}}
+			</div>			
+		</div>
+	</div>
+	<div class="row-fluid">
+		<label><strong>CALCULO DO IMPOSTO</strong></label>
+		<div class="span12">
+			<div class="row-fluid">				
+				<div class="span12">
+					<div class="span3 tamanho_fixo_1">
+					<label>Base de calculo do ICMS</label>
+					{{=form.custom.widget.base_calculo_icms}}
+				</div>
+				<div class="span3 tamanho_fixo_1">
+					<label>Valor do ICMS</label>
+					{{=form.custom.widget.valor_icms}}
+				</div>
+				<div class="span2 tamanho_fixo_1">
+					<label>Valor total dos produtos</label>
+					{{=form.custom.widget.total}}
+				</div>
+			</div>
+			<div class="row-fluid">				
+				<div class="span12">
+					<div class="span3 tamanho_fixo_1">
+					<label>Valor do frete</label>
+					{{=form.custom.widget.frete}}
+				</div>
+				<div class="span3 tamanho_fixo_1">
+					<label>Desconto</label>
+					{{=form.custom.widget.desconto}}
+				</div>
+				<div class="span2 tamanho_fixo_2">
+					<label>Valor de outras despesas</label>
+					{{=form.custom.widget.outras}}
+				</div>
+				<div class="span2 tamanho_fixo_2">
+					<label>Valor do IPI</label>
+					{{=form.custom.widget.valor_ipi}}
+				</div>
+			</div>					
+		</div>
+	</div>
+	<div class="row-fluid">
+		<label><strong>DADOS DO PRODUTO</strong></label>
+		<div class="span12">
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="span3 tamanho_fixo_2">
+						<label for="">COD.PROD</label>
+						<input type="text" class="integer" id="produto_id" name="produto_id">
+					</div>
+					<div class="span3 tamanho_fixo_2">
+						<label for="">DESCRICAO DO PRODUTO</label>
+						<input type="text" class="string" id="descricao" name="descricao">
+					</div>
+					<div class="span3 tamanho_fixo_2">
+						<label for="">UNID</label>
+						<input type="text" class="string" id="unidade_compra" name="unidade_compra">
+					</div>
+					<div class="span3 tamanho_fixo_2">
+						<label for="">V.UNITARIO</label>
+						<input type="text" class="double" id="preco_unitario" name="preco_unitario">
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="web2py_table">
+					<div class="web2py_htmltable" style="width:100%;overflow-x:auto;-ms-overflow-x:scroll">
+						<table id="itens">
+							<thead>
+								<tr>
+									<th class="">COD.PROD</th>
+									<th class="">DESCRICAO</th>
+									<th class="">UNID</th>
+									<th class="">V.UNITARIO</th>
+									<th class=""></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+				</div>		
+			</div>
+		</div>
+	</div>	
+<input type="submit" value="Confirmar nota" id="confirmar">
+</div>
+{{=form.custom.end}}
+
+<script>
+
+	$("#preco_unitario").blur(function() {
+		var codigo_produto = $("#produto_id").val()
+		var unidade_compra = $("#unidade_compra").val()
+		var descricao = $("#descricao").val()
+		var preco_unitario = $("#preco_unitario").val()
+
+		$('#itens > tbody:last').append('<tr><td class="cod">'+codigo_produto+'</td><td class="desc">'+descricao+'</td><td class="und">'+unidade_compra+'</td><td class="preco">'+preco_unitario+'</td><td class="row_buttons" nowrap="nowrap"><input type="button" name="excluir" value="Excluir" /></td></tr>');
+
+		$("#produto_id").val("")
+		$("#unidade_compra").val("")
+		$("#descricao").val("")
+		$("#preco_unitario").val("")
+		$("#produto_id").focus();
+	});
+
+	$(document).on("click", "input[type=button][name=excluir]", function() {
+		$(this).parent().parent().remove();
+		$("#produto_id").focus();
+	});	
+
+	$("#produto_id").focus();
+
+
+
+	//$("#produto_id").blur(function(){
+		/*$.ajax({
+			type: "GET",
+			url: "retorna_nome_produto_por_codigo?produto_id=" + $("#produto_id").val(),			
+			success: function(data) {
+				$("#descricao").val(data);
+			}
+		});*/
+
+		/*$.ajax({
+			type: "GET",
+			url: "retorna_unidade_produto_por_codigo?produto_id=" + $("#produto_id").val(),			
+			success: function(data) {
+				$("#unidade_compra").val(data);
+			}
+		});*/
+	//});
+
+	
+
+
+</script>
