@@ -1,6 +1,9 @@
 import compras
 import financeiro
-import estoque
+import estoque 
+
+import gluon.contrib.simplejson as simplejson
+import urllib 
 
 def inserir_fornecedor():
 	form = SQLFORM.factory(db.fornecedor, db.endereco, db.contato)
@@ -62,23 +65,57 @@ def inserir_ramo_atividade():
 
 def nota_fiscal_compra():
 	form = SQLFORM(db.nota_fiscal_compra)
+	cookies = True
+	if request.cookies.has_key('itens'):		
+		decoded = urllib.unquote(request.cookies['itens'].value).decode('utf8')
+		json = simplejson.loads(decoded)
+		if len(json) == 0:
+			cookies = False	 
 
-	if form.process().accepted:
-		#cria objeto da Nota fiscal
-		#cria lista de objetos de itens da nota fiscal
-		#Passa o objeto para metodo que gera a conta a pagar ao fornecedor
-		#Passa o objeto para metodo que gera debito e credito da transacao
-		#Passa lista de itens para metodo de estoque para atualiza-lo
-		"""capa_nota_fiscal = compras.NotaFiscalCompra(form.vars.numero,form.vars.data_emissao,
-													form.vars.data_chegada,form.vars.natureza_operacao,
-													form.vars.fornecedor_id,form.vars.base_calculo_icms,
-													form.vars.valor_icms,form.vars.valor_ipi,
-													form.vars.frete, form.vars.outras, form.vars.desconto,
-													form.vars.condicao_pagamento_id, form.vars.total)
+	redirect_vars = {}		
+
+	if cookies and form.process().accepted:
+		capa_nota_fiscal = compras.NotaFiscalCompra(form.vars.numero,form.vars.data_emissao,
+							form.vars.data_chegada,form.vars.natureza_operacao,
+							form.vars.fornecedor_id,form.vars.base_calculo_icms,
+							form.vars.valor_icms,form.vars.valor_ipi,
+							form.vars.frete, form.vars.outras, form.vars.desconto,
+							form.vars.condicao_pagamento_id, form.vars.total)
+
 		gerenteFinanceiro = financeiro.GerenteFinanceiro()
-		gerenteFinanceiro.gerar_automaticamente_conta_pagar_fornecedor(capa_nota_fiscal)"""
 
-		response.flash = 'Registro inserido com sucesso'
+		gerenteFinanceiro.gerar_automaticamente_conta_pagar_fornecedor(capa_nota_fiscal)
+
+		estoquista = estoque.Estoquista()
+
+		itens = []
+
+		for item in json:
+			db.item_compra.insert(produto_id=item['id'],nota_fiscal_id=form.vars.id,
+											descricao=item['descricao'],preco_unitario=item['valor_unitario'],
+											quantidade=item['quantidade'],unidade_compra=item['unidade'],
+											aliquota_icms=item['aliquota'],total_item=item['valor_total'])
+			item_da_nota_fiscal = estoque.ItemNotaFiscal()
+			item_da_nota_fiscal.produto_id = item['id']
+			item_da_nota_fiscal.descricao = item['descricao']
+			item_da_nota_fiscal.total = item['valor_total']
+
+			estoquista.criar_registro_de_entrada_no_estoque(item_da_nota_fiscal)
+
+			itens.append(item['id'])
+
+		redirect_vars = {"nota_id":form.vars.id, "itens_nota":itens}	
+		redirect(URL('nota_fiscal_compra_espelho',vars=redirect_vars))
+
+		#response.flash = 'Registro inserido com sucesso'
 	elif form.errors:
 		response.flash = 'O formulario contem erros.'
 	return dict(form=form)
+
+def nota_fiscal_compra_espelho():
+	nota_fiscal = db(db.nota_fiscal_compra.id == request.vars.nota_id).select()
+	itens_da_nota = db(db.item_compra.nota_fiscal_id == request.vars.nota_id).select()
+	lancamentos_da_nota = db(db.conta_pagar.numero_nota_fiscal == nota_fiscal[0].numero).select() 
+
+	return dict(nota_fiscal=nota_fiscal[0], itens_da_nota=itens_da_nota, 
+		lancamentos_da_nota=lancamentos_da_nota)
