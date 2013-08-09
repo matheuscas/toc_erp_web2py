@@ -5,7 +5,7 @@ from os import path
 
 sys.path.append('../../../') # we need this to use web2py's modules
 
-from gluon import current
+from gluon import *
 
 class GerenteFinanceiro(object):
 	"""docstring for GerenteFinanceiro"""
