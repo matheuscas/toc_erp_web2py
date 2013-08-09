@@ -6,8 +6,7 @@ from os import path
 
 sys.path.append('../../../') # we need this to use web2py's modules
 
-from gluon.sql import DAL, Field
-from gluon.validators import *
+from gluon import *
 
 class Estoquista(object):
 	"""docstring for Estoquista"""
@@ -22,11 +21,12 @@ class Estoquista(object):
 		self.db_copy.import_table_definitions(path_to_database)
 		
 	def criar_registro_de_entrada_no_estoque(self, item_da_nota_fiscal):		
-		self.db_copy.registro_estoque.insert(produto_id=item_da_nota_fiscal.produto_id,
+		current.db.registro_estoque.insert(produto_id=item_da_nota_fiscal.produto_id,
 												descricao_produto=item_da_nota_fiscal.descricao,
 												quantidade_entrada=item_da_nota_fiscal.total, 
 												quantidade_saida=0)	
 		self.db_copy.commit()
+
 	def atualizar_registro_de_entrada_no_estoque(self, item_estoque, item_da_nota_fiscal):		
 		quantidade_entrada_atualizada = item_estoque[0].quantidade_entrada + item_da_nota_fiscal.total
 		saldo_atualizado = quantidade_entrada_atualizada - item_estoque[0].quantidade_saida
@@ -42,6 +42,9 @@ class Estoquista(object):
 			if len(item_estoque) > 0:
 				self.atualizar_registro_de_entrada_no_estoque(item_estoque,item_da_nota_fiscal)
 			else:
-				self.criar_registro_de_entrada_no_estoque(item_da_nota_fiscal)	
+				self.criar_registro_de_entrada_no_estoque(item_da_nota_fiscal)
+
+class ItemNotaFiscal():
+		pass					
 
 			
