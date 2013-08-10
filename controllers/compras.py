@@ -124,6 +124,10 @@ def nota_fiscal_compra_espelho():
 	return dict(nota_fiscal=nota_fiscal[0], itens_da_nota=itens_da_nota,
 		lancamentos_da_nota=lancamentos_da_nota, contabeis=contabeis)
 
+def listar_notas_fiscais():
+	grid = SQLFORM.grid(db.nota_fiscal_compra)
+	return dict(form=grid)	
+
 def retornar_dados_produto():
 	prod_rows = db(db.produto.id == request.vars.id).select()
 	if len(prod_rows) > 0:

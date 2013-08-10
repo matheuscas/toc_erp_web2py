@@ -25,7 +25,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Compras'),False,URL('compras', 'listar_fornecedores'), [
+    (T('Compras'),False,URL('compras', 'listar_notas_fiscais  '), [
       (T('Fornecedores'),False,URL('compras', 'listar_fornecedores'))]),
     (T('Estoque'),False,URL('estoque','pesquisar_estoque'),[
       (T('Produtos'),False,URL('estoque','pesquisar_produtos')),
@@ -34,7 +34,7 @@ response.menu = [
       (T('Subsecoes'),False,URL('estoque','pesquisar_subsecoes')),
       (T('Fabricantes'),False,URL('estoque','pesquisar_fabricantes')),
       (T('Marcas'),False,URL('estoque','pesquisar_marcas'))]),
-    (T('Financeiro'),False,URL('financeiro','pesquisar_condicoes_pagamento'),[
+    (T('Financeiro'),False,URL('financeiro','pesquisar_titulos_a_pagar'),[
       (T('Condicoes de Pagamento'),False,URL('financeiro','pesquisar_condicoes_pagamento'))]),
     (T('Fiscal'),False,URL('fiscal','pesquisar_imposto'),[
       (T('Impostos'),False,URL('fiscal','pesquisar_imposto'))])
