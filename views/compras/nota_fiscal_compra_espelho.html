@@ -8,21 +8,85 @@
 _class='nav nav-list'),_class='well sidebar-nav')}}
 {{end}}
 
-{{if nota_fiscal and itens_da_nota:}}
+{{if nota_fiscal or itens_da_nota or lancamentos_da_nota or contabeis:}}
 
-<h1>Nota fiscal: {{=nota_fiscal.numero}}</h1>
-<h2>Itens da nota</h2>
-<li>
-{{for i in itens_da_nota:}}
-<ul>{{=i.produto_id}} - {{=i.descricao}} - {{=i.preco_unitario}} - {{=i.quantidade}} - {{=i.total_item}}</ul>
-{{pass}}	
-</li>
-<h2>Contas a pagar</h2>
-<li>
-{{for l in lancamentos_da_nota:}}
-<ul>{{=l.numero_titulo}} - {{l.parcela}} - {{l.valor_pago}}</ul>
-{{pass}}	
-</li>
-<h2>Lancamentos contabil</h2>
+<h3>Nota fiscal: {{=nota_fiscal.numero}}</h3>
+<table class="table table-striped">
+  <caption><h4>Itens da nota</h4></caption>	
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Descricao</th>
+      <th>Quantidade comprada</th>
+      <th>Preco unitario</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{for i in itens_da_nota:}}	
+    <tr>
+      <td>{{=i.produto_id}} </td>
+      <td>{{=i.descricao}}</td>
+      <td>{{=i.quantidade}}</td>
+      <td>{{=i.preco_unitario}}</td>
+      <td>{{=i.total_item}} </td>
+    </tr> 
+  {{pass}}    
+  </tbody>
+</table>
+
+<table class="table table-striped">
+  <caption><h4>Titulos a pagar</h4></caption>	
+  <thead>
+    <tr>
+      <th>Numero do titulo</th>
+      <th>Numero da parcela</th>
+      <th>Categoria</th>
+      <th>Emissao</th>
+      <th>Vencimento</th>
+      <th>Valor nominal</th>
+      <th>Valor da parcela</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{for lancamento in lancamentos_da_nota:}}	
+    <tr>
+      <td>{{=lancamento.numero_titulo}}</td>
+      <td>{{=lancamento.parcela}}</td>
+      <td>{{=lancamento.categoria}}</td>
+      <td>{{=lancamento.data_emissao}}</td>
+      <td>{{=lancamento.data_vencimento}}</td>
+      <td>{{=lancamento.valor_nominal}}</td>
+      <td>{{=lancamento.valor_parcela}}</td>
+      <td>{{=lancamento.status}}</td>
+    </tr> 
+  {{pass}}    
+  </tbody>
+</table>
+
+<table class="table table-striped">
+  <caption><h4>Lancamentos contabeis</h4></caption>	
+  <thead>
+    <tr>
+      <th>Transacao</th>
+      <th>Conta credito</th>
+      <th>Conta debito</th>
+      <th>Data lancamento</th>
+      <th>Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{for contabil in contabeis:}}	
+    <tr>
+      <td>{{=contabil.transacao}}</td>
+      <td>{{=contabil.conta_credito}}</td>
+      <td>{{=contabil.conta_debito}}</td>
+      <td>{{=contabil.data_lancamento}}</td>
+      <td>{{=contabil.valor}}</td>
+    </tr> 
+  {{pass}}    
+  </tbody>
+</table>
 
 {{pass}}
