@@ -115,7 +115,19 @@ def nota_fiscal_compra():
 def nota_fiscal_compra_espelho():
 	nota_fiscal = db(db.nota_fiscal_compra.id == request.vars.nota_id).select()
 	itens_da_nota = db(db.item_compra.nota_fiscal_id == request.vars.nota_id).select()
-	lancamentos_da_nota = db(db.conta_pagar.numero_nota_fiscal == nota_fiscal[0].numero).select() 
+	lancamentos_da_nota = db(db.conta_pagar.numero_nota_fiscal == nota_fiscal[0].numero).select()
+	contabeis = []
+	for l in lancamentos_da_nota:
+		contabil = db(db.lancamento_contabil.transacao == l.numero_titulo).select()
+		contabeis.append(contabil[0])
 
-	return dict(nota_fiscal=nota_fiscal[0], itens_da_nota=itens_da_nota, 
-		lancamentos_da_nota=lancamentos_da_nota)
+	return dict(nota_fiscal=nota_fiscal[0], itens_da_nota=itens_da_nota,
+		lancamentos_da_nota=lancamentos_da_nota, contabeis=contabeis)
+
+def retornar_dados_produto():
+	prod_rows = db(db.produto.id == request.vars.id).select()
+	if len(prod_rows) > 0:
+		return prod_rows[0].nome + "," + prod_rows[0].unidade_medida + "," + str(len(prod_rows))
+	else:
+		return "none,none,0" 	
+	
