@@ -212,6 +212,8 @@
 							quantidade.focus();
 						} else {
 							alert("O produto não existe.");
+							descricao.val("");
+							unidade.val("");
 							$this.val("").removeAttr("disabled").focus();
 						}
 					}
