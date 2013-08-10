@@ -1,0 +1,11 @@
+{{left_sidebar_enabled=True}}
+{{extend 'layout.html'}}
+{{block left_sidebar}}
+{{=DIV(UL(
+	LI('Compras', _class='nav-header'),
+	LI(A('Inserir fornecedor',_href=URL('compras','inserir_fornecedor'))),
+	LI(A('Listar fornecedores',_href=URL('compras','listar_fornecedores'))),
+_class='nav nav-list'),_class='well sidebar-nav')}}
+{{end}}
+<h3>Notas fiscais lancadas</h3>
+{{=form}}
