@@ -1,3 +1,6 @@
+import gluon.contrib.simplejson as simplejson
+import urllib 
+
 db.define_table('nota_fiscal_compra',
 	Field('numero','integer',required=True, notnull=True, unique=True),
 	Field('data_emissao','date',required=True, notnull=True),
@@ -13,3 +16,11 @@ db.define_table('nota_fiscal_compra',
 	Field('condicao_pagamento_id','reference condicao_pagamento'),
 	Field('total','double',required=True, notnull=True),
 	format='%(numero)s')
+
+def valida_itens(form):
+	if request.cookies.has_key('itens'):		
+		decoded = urllib.unquote(request.cookies['itens'].value).decode('utf8')
+		json = simplejson.loads(decoded)
+		if len(json) == 0:
+			form.errors.cod_prod = 'A nota nao pode ser confirmada sem itens.'
+			response.flash = 'A nota nao pode ser confirmada sem itens.'

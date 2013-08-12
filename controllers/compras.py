@@ -52,29 +52,17 @@ def inserir_ramo_atividade():
 	form = SQLFORM(db.ramoAtividade)
 	if form.process().accepted:
 		response.flash = 'Registro inserido com sucesso'
-	return dict(form=form)   
-	
-"""def atualizar_ramo_atividade():
-	ramo = db.ramoAtividade(request.args(0))
-	form = SQLFORM(db.ramoAtividade, ramo, deletable=True)
-	if form.process().accepted:
-		response.flash = 'Ramo de atividade alterado com sucesso.'
-	elif form.errors:
-		response.flash = 'Registro nao atualizado. Verifique o preenchimento.'	
-	return dict(form=form)"""
+	return dict(form=form) 
 
 def nota_fiscal_compra():
 	form = SQLFORM(db.nota_fiscal_compra)
-	cookies = True
-	if request.cookies.has_key('itens'):		
-		decoded = urllib.unquote(request.cookies['itens'].value).decode('utf8')
-		json = simplejson.loads(decoded)
-		if len(json) == 0:
-			cookies = False	 
-
 	redirect_vars = {}		
 
-	if cookies and form.process().accepted:
+	if form.process(onvalidation=valida_itens).accepted:
+
+		decoded = urllib.unquote(request.cookies['itens'].value).decode('utf8')
+		json = simplejson.loads(decoded)
+		
 		capa_nota_fiscal = compras.NotaFiscalCompra(form.vars.numero,form.vars.data_emissao,
 							form.vars.data_chegada,form.vars.natureza_operacao,
 							form.vars.fornecedor_id,form.vars.base_calculo_icms,
@@ -98,18 +86,20 @@ def nota_fiscal_compra():
 			item_da_nota_fiscal = estoque.ItemNotaFiscal()
 			item_da_nota_fiscal.produto_id = item['id']
 			item_da_nota_fiscal.descricao = item['descricao']
-			item_da_nota_fiscal.total = item['valor_total']
+			item_da_nota_fiscal.total = item['quantidade']
+			itens.append(item_da_nota_fiscal)
 
-			estoquista.criar_registro_de_entrada_no_estoque(item_da_nota_fiscal)
+		estoquista.atualizar_estoque_para_entradas(itens)	
 
-			itens.append(item['id'])
-
-		redirect_vars = {"nota_id":form.vars.id, "itens_nota":itens}	
+		redirect_vars = {"nota_id":form.vars.id}	
 		redirect(URL('nota_fiscal_compra_espelho',vars=redirect_vars))
 
 		#response.flash = 'Registro inserido com sucesso'
 	elif form.errors:
-		response.flash = 'O formulario contem erros.'
+		if not response.flash:
+			response.flash = 'O formulario contem erros.'
+		else:
+			response.flash = form.errors.cod_prod		
 	return dict(form=form)
 
 def nota_fiscal_compra_espelho():

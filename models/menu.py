@@ -26,7 +26,8 @@ response.google_analytics_id = None
 
 response.menu = [
     (T('Compras'),False,URL('compras', 'listar_notas_fiscais  '), [
-      (T('Fornecedores'),False,URL('compras', 'listar_fornecedores'))]),
+      (T('Fornecedores'),False,URL('compras', 'listar_fornecedores')),
+      (T('Lancamento de Nota Fiscal'),False,URL('compras', 'nota_fiscal_compra'))]),
     (T('Estoque'),False,URL('estoque','pesquisar_estoque'),[
       (T('Produtos'),False,URL('estoque','pesquisar_produtos')),
       (T('Embalagens'),False,URL('estoque','pesquisar_embalagens')),

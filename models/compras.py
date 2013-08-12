@@ -21,7 +21,7 @@ db.define_table('fornecedor',
 	Field('telefone','string'),
 	Field('contato_id','reference contato', writable=False, readable=False),
 	Field('historico','text'),
-	format='%(nomeFantasia)s - %(cpf_cnpj)s')
+	format='%(nome)s - %(cpf_cnpj)s')
 
 db.define_table('ramoAtividade',
 	Field('nome_ramo','string',required=True, notnull=True),
