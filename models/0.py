@@ -11,9 +11,9 @@
 
 from gluon.custom_import import track_changes; track_changes(True)
 
-db_username_postgres = 'root'
-db_password_postgres = 'root'
-db_postgres_url = 'mysql://' + db_username_postgres + ':' + db_password_postgres + '@localhost/toc_erp_web2py'
+db_username_postgres = 'postgres'
+db_password_postgres = '1234'
+db_postgres_url = 'postgres://' + db_username_postgres + ':' + db_password_postgres + '@localhost/dev' 
 db_sqlite_url = 'sqlite://storage.sqlite'
 
 if not request.env.web2py_runtime_gae:
