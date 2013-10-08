@@ -1,5 +1,5 @@
 db.define_table('subsecao',
-	Field('nome','string',required=True, notnull=True, unique=True),
+	Field('nome','string',required=True, notnull=True, unique=True, length=255),
 	Field('descricao','text'),
 	Field('situacao','string',required=True,notnull=True),
 	Field('secao_id','reference secao',required=True,notnull=True),

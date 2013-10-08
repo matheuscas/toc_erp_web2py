@@ -1,5 +1,5 @@
 db.define_table('marca',
-	Field('nome','string',required=True, notnull=True, unique=True),
+	Field('nome','string',required=True, notnull=True, unique=True, length=255),
 	Field('imagem','upload'),
 	Field('fabricante_id','list:reference fabricante',required=True,notnull=True),
 	Field('situacao','string',required=True,notnull=True),

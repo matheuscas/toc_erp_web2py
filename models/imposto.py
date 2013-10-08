@@ -1,5 +1,5 @@
 db.define_table('imposto',
-	Field('nome_imposto','string',required=True,unique=True,notnull=True),
+	Field('nome_imposto','string',required=True,unique=True,notnull=True, length=255),
 	Field('tipo_imposto','string',required=True),
 	Field('tipo_aliquota_imposto','string', required=True),
 	Field('percentual_imposto','decimal(4,2)',required=True, notnull=True),

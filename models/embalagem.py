@@ -1,5 +1,5 @@
 db.define_table('embalagem',
-	Field('nome','string',required=True,notnull=True,unique=True),
+	Field('nome','string',required=True,notnull=True,unique=True, length=255),
 	Field('unidade_medida','string',required=True,notnull=True),
 	Field('quantidade_casas_decimais','string',required=True,notnull=True),
 	Field('situacao','string',required=True,notnull=True),

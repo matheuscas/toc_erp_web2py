@@ -2,7 +2,7 @@ import gluon.contrib.simplejson as simplejson
 import urllib 
 
 db.define_table('nota_fiscal_compra',
-	Field('numero','integer',required=True, notnull=True, unique=True),
+	Field('numero','integer',required=True, notnull=True, unique=True, length=255),
 	Field('data_emissao','date',required=True, notnull=True),
 	Field('data_chegada','date',required=True, notnull=True),
 	Field('natureza_operacao',required=True, notnull=True),
