@@ -11,7 +11,7 @@ class TestCadastroCondicaoPagamento(TestSetup):
 		controller_inserir = 'inserir_condicao_pagamento'
 		self.url_inserir_condicao_pagamento = financeiro_url_base + controller_inserir
 		self.descricao = 'uma condicao de pagamento qualquer'.upper()
-		self.data_vencimento = '2013-08-25'
+		self.data_vencimento = '2013-10-14'
 		self.desconto = 10
 		self.acrescimo = 15
 		self.numero_parcela = 3

@@ -21,7 +21,7 @@ class Estoquista(object):
 		self.db_copy.import_table_definitions(path_to_database)
 		
 	def criar_registro_de_entrada_no_estoque(self, item_da_nota_fiscal):		
-		current.db.registro_estoque.insert(produto_id=item_da_nota_fiscal.produto_id,
+		self.db_copy.registro_estoque.insert(produto_id=item_da_nota_fiscal.produto_id,
 												descricao_produto=item_da_nota_fiscal.descricao,
 												quantidade_entrada=item_da_nota_fiscal.total, 
 												quantidade_saida=0)	
@@ -30,14 +30,14 @@ class Estoquista(object):
 	def atualizar_registro_de_entrada_no_estoque(self, item_estoque, item_da_nota_fiscal):		
 		quantidade_entrada_atualizada = item_estoque[0].quantidade_entrada + int(item_da_nota_fiscal.total)
 		saldo_atualizado = quantidade_entrada_atualizada - item_estoque[0].quantidade_saida
-		current.db(current.db.registro_estoque.produto_id 
+		self.db_copy(self.db_copy.registro_estoque.produto_id 
 						== item_da_nota_fiscal.produto_id).update(quantidade_entrada=quantidade_entrada_atualizada,
 																	saldo=saldo_atualizado)
 		self.db_copy.commit()
 
 	def atualizar_estoque_para_entradas(self,lista_itens_nota_fiscal):
 		for item_da_nota_fiscal in lista_itens_nota_fiscal:
-			item_estoque = current.db(current.db.registro_estoque.produto_id 
+			item_estoque = self.db_copy(self.db_copy.registro_estoque.produto_id 
 				== item_da_nota_fiscal.produto_id).select()
 			if len(item_estoque) > 0:
 				self.atualizar_registro_de_entrada_no_estoque(item_estoque,item_da_nota_fiscal)

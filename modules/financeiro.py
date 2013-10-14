@@ -19,11 +19,8 @@ class GerenteFinanceiro(object):
 		self.db_copy.import_table_definitions(path_to_database)
 
 	def gerar_automaticamente_conta_pagar_fornecedor(self, nota_fiscal_compra):
-
-		#condicao_pagamento = self.db_copy(self.db_copy.condicao_pagamento.id == 
-		#								nota_fiscal_compra.condicao_pagamento_id).select()
 		
-		condicao_pagamento = current.db(current.db.condicao_pagamento.id == 
+		condicao_pagamento = self.db_copy(self.db_copy.condicao_pagamento.id == 
 										nota_fiscal_compra.condicao_pagamento_id).select()
 
 		quantidade_parcelas = condicao_pagamento[0].numero_parcelas
@@ -47,7 +44,7 @@ class GerenteFinanceiro(object):
 			if p == quantidade_parcelas:
 				valor_parcela + diff
 
-			_id = current.db.conta_pagar.insert(numero_titulo=numero_titulo, parcela=p, 
+			_id = self.db_copy.conta_pagar.insert(numero_titulo=numero_titulo, parcela=p, 
 											numero_documento=numero_documento, 
 											numero_nota_fiscal=nota_fiscal_compra.numero,
 											fornecedor_id=nota_fiscal_compra.fornecedor_id,categoria=categoria,
@@ -55,13 +52,13 @@ class GerenteFinanceiro(object):
 											data_vencimento=(data_emissao + (data_vencimento_delta * p)),
 											data_criacao=data_criacao, valor_nominal=valor_nominal,
 											status=status, valor_parcela=valor_parcela)
-			current.db.commit()
+			self.db_copy.commit()
 			self.gerar_credito_debito_de_conta_a_pagar(_id)
 		
 
 	def gerar_credito_debito_de_conta_a_pagar(self, conta_pagar_id):
-		conta_pagar = current.db.conta_pagar[conta_pagar_id]
-		current.db.lancamento_contabil.insert(valor=conta_pagar.valor_parcela,conta_credito='COMPRAS',
+		conta_pagar = self.db_copy.conta_pagar[conta_pagar_id]
+		self.db_copy.lancamento_contabil.insert(valor=conta_pagar.valor_parcela,conta_credito='COMPRAS',
 												conta_debito='CAIXA', transacao=conta_pagar.numero_titulo,
 												data_lancamento=conta_pagar.data_vencimento)
-		current.db.commit()											
+		self.db_copy.commit()											

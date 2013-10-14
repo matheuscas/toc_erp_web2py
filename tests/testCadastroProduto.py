@@ -33,7 +33,7 @@ class TestCadastroProduto(TestSetup):
 		temp_id = self.db_test.secao.insert(nome="secao teste".upper(),situacao='ATIVO')
 		self.db_test.commit()
 
-		time.sleep(0.1)
+		time.sleep(0.5)
 
 		self.driver.get(self.url_inserir_produto)
 		self.driver.find_element_by_id('produto_nome').send_keys(self.nome)
