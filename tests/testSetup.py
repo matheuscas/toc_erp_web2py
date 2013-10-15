@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait # available since 2.4.0
 from selenium.webdriver.support import expected_conditions as EC # available since 2.26.0
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 sys.path.append('../../../') # we need this to use web2py's modules
 
@@ -17,7 +18,10 @@ class TestSetup(unittest.TestCase):
 
 	def setUp(self):
 
-		self.driver = webdriver.Firefox()
+		#self.driver = webdriver.Firefox()
+		self.driver = webdriver.Remote(command_executor='http://0.0.0.0:4444/wd/hub',
+						desired_capabilities=DesiredCapabilities.FIREFOX)
+
 		self.submit_button = "//input[@value='Submit']"
 
 		db_username_postgres = 'postgres'
