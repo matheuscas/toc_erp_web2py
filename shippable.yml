@@ -6,12 +6,15 @@ python:
   - "2.7"
 
 before_install:
-  - wget http://www.web2py.com/examples/static/web2py_src.zip
-  - unzip web2py_src.zip  
+  - wget -p /home/minion/projects/53887cc181ef39d702c8f775/ http://www.web2py.com/examples/static/web2py_src.zip
+  - unzip /home/minion/projects/53887cc181ef39d702c8f775/web2py_src.zip  
 install: 
   - pip install -r requirements.txt --use-mirrors
 before_script: 
-  - mkdir -p shippable/testresults
   - ls /home/minion/projects/53887cc181ef39d702c8f775/
+  - ls /home/minion/projects/53887cc181ef39d702c8f775/builds
+  - ls /home/minion/projects/53887cc181ef39d702c8f775/code
+  - cd /home/minion/projects/53887cc181ef39d702c8f775/code
+  - mv * /home/minion/projects/53887cc181ef39d702c8f775/web2py/applications/
 script:
-  - nosetests web2py/applications/code/tests/completeTestSuite.py --with-xunit --xunit-file=shippable/testresults/nosetests.xml
+  - nosetests /home/minion/projects/53887cc181ef39d702c8f775/web2py/applications/code/tests/completeTestSuite.py
