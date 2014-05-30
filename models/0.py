@@ -55,7 +55,7 @@ auth = Auth(db)
 crud, service, plugins = Crud(db), Service(), PluginManager()
 
 ## create all tables needed by auth if not custom tables
-auth.define_tables(username=False, signature=False)
+#auth.define_tables(username=False, signature=False)
 #db._common_fields.append(auth.signature)
 
 
@@ -66,9 +66,9 @@ mail.settings.sender = 'you@gmail.com'
 mail.settings.login = 'username:password'
 
 ## configure auth policy
-auth.settings.registration_requires_verification = False
-auth.settings.registration_requires_approval = False
-auth.settings.reset_password_requires_verification = True
+#auth.settings.registration_requires_verification = False
+#auth.settings.registration_requires_approval = False
+#auth.settings.reset_password_requires_verification = True
 
 ## if you need to use OpenID, Facebook, MySpace, Twitter, Linkedin, etc.
 ## register with janrain.com, write your domain:api_key in private/janrain.key
