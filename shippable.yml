@@ -7,14 +7,11 @@ python:
 
 before_install:
   - wget http://www.web2py.com/examples/static/web2py_src.zip
-  - unzip web2py_src.zip -d /home/minion/projects/53887cc181ef39d702c8f775/  
+  - unzip web2py_src.zip -d /home/minion/projects/53887cc181ef39d702c8f775/
+  - mkdir /home/minion/projects/53887cc181ef39d702c8f775/web2py/applications/toc
+  - cd /home/minion/projects/53887cc181ef39d702c8f775/code
+  - mv * /home/minion/projects/53887cc181ef39d702c8f775/web2py/applications/toc  
 install: 
   - pip install -r requirements.txt --use-mirrors
-before_script: 
-  - ls /home/minion/projects/53887cc181ef39d702c8f775/
-  - ls /home/minion/projects/53887cc181ef39d702c8f775/code
-  - cd /home/minion/projects/53887cc181ef39d702c8f775/code
-  - mkdir /home/minion/projects/53887cc181ef39d702c8f775/web2py/applications/toc
-  - mv * /home/minion/projects/53887cc181ef39d702c8f775/web2py/applications/toc
 script:
   - nosetests /home/minion/projects/53887cc181ef39d702c8f775/web2py/applications/toc/tests/completeTestSuite.py
