@@ -5,7 +5,15 @@ language: python
 python:
   - "2.7"
 
-before_script: mkdir -p shippable/codecoverage shippable/testresults
-install: pip install -r requirements.txt --use-mirrors 
+before_install:  
+  - sudo apt-get install unzip
+  - wget http://www.web2py.com/examples/static/web2py_src.zip
+  - unzip web2py_src.zip  
+install: 
+  - pip install -r requirements.txt --use-mirrors
+before_script: 
+  - mkdir -p shippable/testresults
+  - mv * ../web2py/applications
+  - python web2py -a 1234    
 script:
-	- nosetests tests/completeTestSuite.py --with-xunit --xunit-file=shippable/testresults/nosetests.xml
+  - nosetests web2py/applications/code/tests/completeTestSuite.py --with-xunit --xunit-file=shippable/testresults/nosetests.xml
