@@ -8,7 +8,9 @@ from selenium.webdriver.support.ui import WebDriverWait # available since 2.4.0
 from selenium.webdriver.support import expected_conditions as EC # available since 2.26.0
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-sys.path.append('../../../') # we need this to use web2py's modules
+#sys.path.append('../../../') # we need this to use web2py's modules
+#
+sys.path.append('/home/minion/projects/53887cc181ef39d702c8f775/web2py/')
 
 from gluon.dal import DAL, Field
 from gluon.validators import *
