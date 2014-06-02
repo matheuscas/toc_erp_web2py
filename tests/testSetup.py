@@ -10,7 +10,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 sys.path.append('../../../') # we need this to use web2py's modules
 
-from gluon.sql import DAL, Field
+from gluon.dal import DAL, Field
 from gluon.validators import *
 
 class TestSetup(unittest.TestCase):
