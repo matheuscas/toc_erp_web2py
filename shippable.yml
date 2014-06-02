@@ -16,5 +16,6 @@ before_install:
   - ls /home/minion/projects/53887cc181ef39d702c8f775/web2py
   - ls /home/minion/projects/53887cc181ef39d702c8f775/web2py/applications
   - ls /home/minion/projects/53887cc181ef39d702c8f775/web2py/gluon
+  - ls /home/minion/projects/53887cc181ef39d702c8f775/web2py/code
 script:
   - nosetests /home/minion/projects/53887cc181ef39d702c8f775/web2py/applications/code/tests/completeTestSuite.py
